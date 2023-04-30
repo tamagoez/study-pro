@@ -1,13 +1,23 @@
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import Link from "next/link";
+import Layout from "../components/Layout";
+import { Divider, Heading } from "@chakra-ui/react";
 
 const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">About</Link>
-    </p>
+  <Layout title="Stupper トップページ">
+    <Heading as="h1" size="xl">
+      Stupper
+    </Heading>
+    <Heading as="h3" size="md">
+      あなたの勉強のお供をします
+    </Heading>
+    <Divider marginY="20px" />
+    <div>
+      <Heading as="h4" size="sm">
+        どのようなことができるか
+      </Heading>
+      <p>実は恥ずかしながら、現状何もできません。</p>
+    </div>
   </Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;
