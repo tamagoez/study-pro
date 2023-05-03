@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { Divider, Heading } from "@chakra-ui/react";
 
 const IndexPage = () => (
-  <Layout title="Stupper トップページ">
+  <Layout titleprop="Stupper トップページ">
     <Heading as="h1" size="xl">
       Stupper
     </Heading>
