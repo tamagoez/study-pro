@@ -1,21 +1,28 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
-import { Divider, Heading } from "@chakra-ui/react";
+import { Divider, Heading, ListItem, UnorderedList } from "@chakra-ui/react";
+
+const APP_TITLE = "StudySharp";
 
 const IndexPage = () => (
-  <Layout titleprop="Stupper トップページ">
+  <Layout titleprop="トップページ">
     <Heading as="h1" size="xl">
-      Stupper
+      {APP_TITLE}
     </Heading>
-    <Heading as="h3" size="md">
-      あなたの勉強のお供をします
+    <Heading as="h4" size="md">
+      勉強に燃えよう
     </Heading>
     <Divider marginY="20px" />
     <div>
-      <Heading as="h4" size="sm">
-        どのようなことができるか
+      <Heading as="h5" size="sm">
+        どのようなことができるようになる予定か
       </Heading>
-      <p>実は恥ずかしながら、現状何もできません。</p>
+      <UnorderedList>
+        <ListItem>Todoタスクを管理できます</ListItem>
+        <ListItem>勉強時間を記録できます</ListItem>
+        <ListItem>自分だけの問題集を作れます</ListItem>
+        <ListItem>お互いで励ましあえます</ListItem>
+      </UnorderedList>
     </div>
   </Layout>
 );
