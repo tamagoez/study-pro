@@ -57,7 +57,7 @@ function AddModal({
 }) {
   return (
     <>
-      <Button onClick={onOpen}>タスクを追加する</Button>
+      <Button onClick={onOpen}>タスクを追加</Button>
 
       <Modal onClose={onClose} isOpen={isOpen} isCentered>
         <ModalOverlay />
@@ -65,7 +65,7 @@ function AddModal({
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>あ</p>
+            <p>現在開発中です</p>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>

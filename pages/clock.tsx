@@ -5,7 +5,7 @@ export default function Clock() {
     <>
       <Layout titleprop="時計">
         <div>
-          <p>実は恥ずかしながら、現状何もできません。</p>
+          <p>現在開発中です。</p>
         </div>
       </Layout>
     </>
