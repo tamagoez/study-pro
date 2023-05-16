@@ -6,6 +6,9 @@ import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { AppProps } from "next/app";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import CommandMenu from "../components/cmdk";
+import ReactCMDK from "../components/react-cmdk";
+
+// import "../styles/cmdk.scss";
 
 const font = Zen_Kaku_Gothic_New({
   weight: "500",
@@ -48,7 +51,10 @@ function MyApp({
       initialSession={pageProps.initialSession}
     >
       <ChakraProvider>
-        <CommandMenu open={cmdkOpen} setOpen={setcmdkOpen} />
+        <ReactCMDK
+          open={cmdkOpen}
+          setOpen={(newState) => setcmdkOpen(newState)}
+        />
         <div className={font.className}>
           <Component {...pageProps} />
         </div>

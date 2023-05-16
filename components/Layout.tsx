@@ -44,6 +44,7 @@ export default function Layout({
           height: 40px;
           width: 100vw;
           top: 0;
+          z-index: 9000;
         }
         .header_title {
           text-align: center;
@@ -72,12 +73,17 @@ export default function Layout({
       {showfooter ? (
         <footer>
           <hr />
-          <span>Stupper by tamagoez</span>
+          <span>全ての勉強をする人へ by tamagoez</span>
         </footer>
       ) : undefined}
     </div>
   );
 }
+
+const menulist = [
+  { title: "タスク", url: "todo", command: "⌘T" },
+  { title: "時計", url: "clock", command: "⌘C" },
+];
 
 const MenuComponent = ({ router }: { router: any }) => (
   <Menu>
@@ -88,9 +94,11 @@ const MenuComponent = ({ router }: { router: any }) => (
       variant="outline"
     />
     <MenuList>
-      <MenuItem command="⌘T" onClick={() => router.push("todo")}>
-        タスクを管理
-      </MenuItem>
+      {menulist.map((x) => (
+        <MenuItem command={x.command} onClick={() => router.push(x.url)}>
+          {x.title}
+        </MenuItem>
+      ))}
     </MenuList>
   </Menu>
 );
