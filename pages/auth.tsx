@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import {
-  Button,
-  Container,
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  StackDivider,
-  useToast,
-  VStack,
-} from "@chakra-ui/react";
 import { MdEmail, MdPassword } from "react-icons/md";
 import { emailAuth } from "../scripts/auth/page";
 import { useRouter } from "next/router";
+import {
+  Button,
+  Col,
+  Form,
+  FormInstance,
+  Input,
+  Row,
+  Space,
+  Typography,
+} from "antd";
+const { Title } = Typography;
 
 export default function Auth() {
   // 関数関係の初期設定
@@ -24,17 +22,17 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const toast = useToast();
 
   // ウィンドウ読み込み
   useEffect(() => {
     // URL変数を確認する
     const params = new URLSearchParams(location.search);
-    const initmode = params.get("mode");
+    const initmode = params.get("initmode");
     const initmoveto = params.get("moveto");
-    if (initmode === ("login" || "signup")) setAuthtype(initmode);
-    if (initmoveto) setMoveTo(initmoveto);
-  }, []);
+    if (initmode == ("login" || "signup")) setAuthtype(initmode);
+    console.log(initmode);
+    // if (initmoveto) setMoveTo(initmoveto);
+  }, [router]);
 
   // Authプロセスの実行
   async function authExec() {
@@ -44,6 +42,7 @@ export default function Auth() {
     } catch (err) {}
   }
 
+  const [form] = Form.useForm();
   return (
     <>
       <Layout
@@ -52,54 +51,78 @@ export default function Auth() {
         }
         showfooter={false}
       >
-        <Container>
-          <FormControl>
-            <FormLabel>Email address</FormLabel>
-            <InputGroup>
-              <InputLeftElement
-                pointerEvents="none"
-                children={<MdEmail color="gray.300" />}
-              />
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </InputGroup>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Password</FormLabel>
-            <InputGroup>
-              <InputLeftElement
-                pointerEvents="none"
-                children={<MdPassword color="gray.300" />}
-              />
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </InputGroup>
-          </FormControl>
-          <VStack
-            divider={<StackDivider borderColor="gray.200" />}
-            spacing={2}
-            align="stretch"
-            marginTop="30px"
-          >
-            <Button
-              onClick={() =>
-                setAuthtype(authtype === "login" ? "signup" : "login")
-              }
+        <Row justify="center">
+          <Col flex="100px"></Col>
+          <Col flex="auto" style={{ textAlign: "center" }}>
+            <Title level={2} style={{ marginTop: "30px" }}>
+              {authtype[0].toUpperCase() +
+                authtype.substring(1, authtype.length)}
+            </Title>
+            <Form
+              form={form}
+              name="validateOnly"
+              layout="vertical"
+              autoComplete="off"
+              style={{ marginTop: "10px" }}
             >
-              {authtype !== "login" ? "ログイン" : "新規登録"}に切り替える
-            </Button>
-            <Button onClick={() => {}}>
-              {authtype === "login" ? "ログイン" : "新規登録"}
-            </Button>
-          </VStack>
-        </Container>
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[{ required: true }]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                label="Password"
+                rules={[{ required: true }]}
+              >
+                <Input.Password placeholder="input password" />
+              </Form.Item>
+              <Form.Item>
+                <Space>
+                  <SubmitButton
+                    form={form}
+                    text={authtype === "login" ? "ログイン" : "新規登録"}
+                  />
+                  <Button
+                    onClick={() =>
+                      setAuthtype(authtype === "login" ? "signup" : "login")
+                    }
+                  >
+                    {authtype !== "login" ? "ログイン" : "新規登録"}に切り替え
+                  </Button>
+                </Space>
+              </Form.Item>
+            </Form>
+          </Col>
+          <Col flex="100px"></Col>
+        </Row>
       </Layout>
     </>
   );
 }
+
+const SubmitButton = ({ form, text }: { form: FormInstance; text: string }) => {
+  const [submittable, setSubmittable] = useState(false);
+
+  // Watch all values
+  const values = Form.useWatch([], form);
+
+  useEffect(() => {
+    form.validateFields({ validateOnly: true }).then(
+      () => {
+        setSubmittable(true);
+      },
+      () => {
+        setSubmittable(false);
+      }
+    );
+  }, [values]);
+
+  return (
+    <Button type="primary" htmlType="submit" disabled={!submittable}>
+      {text}
+    </Button>
+  );
+};

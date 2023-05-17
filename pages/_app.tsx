@@ -1,11 +1,9 @@
 // pages/_app.js
-import { ChakraProvider } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { AppProps } from "next/app";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
-import CommandMenu from "../components/cmdk";
 import ReactCMDK from "../components/react-cmdk";
 
 // import "../styles/cmdk.scss";
@@ -50,15 +48,13 @@ function MyApp({
       supabaseClient={supabase}
       initialSession={pageProps.initialSession}
     >
-      <ChakraProvider>
-        <ReactCMDK
-          open={cmdkOpen}
-          setOpen={(newState) => setcmdkOpen(newState)}
-        />
-        <div className={font.className}>
-          <Component {...pageProps} />
-        </div>
-      </ChakraProvider>
+      <ReactCMDK
+        open={cmdkOpen}
+        setOpen={(newState) => setcmdkOpen(newState)}
+      />
+      <div className={font.className}>
+        <Component {...pageProps} />
+      </div>
     </SessionContextProvider>
   );
 }

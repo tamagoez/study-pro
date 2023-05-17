@@ -1,18 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import {
-  Flex,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Spacer,
-} from "@chakra-ui/react";
 import { MdMenu } from "react-icons/md";
-import { movePage } from "../scripts/action";
+// import { movePage } from "../scripts/action";
 import { useRouter } from "next/router";
+import { Divider, Menu, MenuProps, Col, Row } from "antd";
 
 const APP_TITLE = "StudySharp";
 
@@ -62,18 +54,20 @@ export default function Layout({
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <header>
-        <Flex>
-          <MenuComponent router={router} />
-          <Spacer />
-          <p className="header_title">{title}</p>
-          <Spacer />
-        </Flex>
+        <Row>
+          <Col span={8}>
+            <MenuComponent router={router} />
+          </Col>
+          <Col span={8}>
+            <p className="header_title">{title}</p>
+          </Col>
+        </Row>
       </header>
       <main style={{ paddingTop: "40px" }}>{children}</main>
       {showfooter ? (
         <footer>
-          <hr />
-          <span>全ての勉強をする人へ by tamagoez</span>
+          <Divider />
+          <span>勉強をする全ての人へ by tamagoez</span>
         </footer>
       ) : undefined}
     </div>
@@ -85,20 +79,64 @@ const menulist = [
   { title: "時計", url: "clock", command: "⌘C" },
 ];
 
-const MenuComponent = ({ router }: { router: any }) => (
-  <Menu>
-    <MenuButton
-      as={IconButton}
-      aria-label="Options"
-      icon={<MdMenu />}
-      variant="outline"
+const items: MenuProps["items"] = [
+  {
+    label: "Menu",
+    key: "MainMenu",
+    icon: <MdMenu />,
+    children: [
+      {
+        type: "group",
+        label: "Item 1",
+        children: [
+          {
+            label: "Option 1",
+            key: "setting:1",
+          },
+          {
+            label: "Option 2",
+            key: "setting:2",
+          },
+        ],
+      },
+      {
+        type: "group",
+        label: "新規追加",
+        children: [
+          {
+            label: "タスクを追加",
+            key: "add:task",
+          },
+          {
+            label: "単語を追加",
+            key: "add:word",
+          },
+          {
+            label: "時計を追加",
+            key: "add:clock",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    label: <Link href="/login">ログイン</Link>,
+    key: "login",
+  },
+  {
+    label: <Link href="/login">新規登録</Link>,
+    key: "signup",
+  },
+];
+
+const MenuComponent = ({ router }: { router: any }) => {
+  const [current, setCurrent] = useState("");
+  return (
+    <Menu
+      selectedKeys={[current]}
+      mode="horizontal"
+      items={items}
+      style={{ background: "none", borderBottom: "none", height: "40px" }}
     />
-    <MenuList>
-      {menulist.map((x) => (
-        <MenuItem command={x.command} onClick={() => router.push(x.url)}>
-          {x.title}
-        </MenuItem>
-      ))}
-    </MenuList>
-  </Menu>
-);
+  );
+};
