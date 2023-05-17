@@ -41,7 +41,8 @@ export default function Layout({
         .header_title {
           text-align: center;
           font-size: 16px;
-          padding-top: 6px;
+          margin: 0;
+          margin-top: 6px;
         }
         main {
           min-width: 100xw;

@@ -9,7 +9,7 @@ import ReactCMDK from "../components/react-cmdk";
 // import "../styles/cmdk.scss";
 
 const font = Zen_Kaku_Gothic_New({
-  weight: "500",
+  weight: ["500", "700", "900"],
   subsets: ["latin"],
   display: "swap",
 });
