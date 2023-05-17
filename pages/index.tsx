@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
-import { Heading, ListItem, UnorderedList } from "@chakra-ui/react";
 
 import { Typography, Divider } from "antd";
 const { Title } = Typography;
