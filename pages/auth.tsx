@@ -27,12 +27,19 @@ export default function Auth() {
   useEffect(() => {
     // URL変数を確認する
     const params = new URLSearchParams(location.search);
-    const initmode = params.get("initmode");
+    // const initmode = params.get("initmode");
     const initmoveto = params.get("moveto");
-    if (initmode == ("login" || "signup")) setAuthtype(initmode);
-    console.log(initmode);
+    // if (initmode == ("login" || "signup")) setAuthtype(initmode);
+    // console.log(initmode);
     // if (initmoveto) setMoveTo(initmoveto);
   }, [router]);
+
+  useEffect(() => {
+    if (router.query.mode && (router.query.mode === "login" || router.query.mode === "signup")) {
+      setAuthtype(router.query.mode);
+    }
+  }, [router.query.mode]);
+  
 
   // Authプロセスの実行
   async function authExec() {
@@ -42,6 +49,8 @@ export default function Auth() {
     } catch (err) {}
   }
 
+
+  // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える
   const [form] = Form.useForm();
   return (
     <>
@@ -87,7 +96,7 @@ export default function Auth() {
                   />
                   <Button
                     onClick={() =>
-                      setAuthtype(authtype === "login" ? "signup" : "login")
+                      router.replace((authtype === "login" ? "/auth?mode=signup" : "/auth?mode=login"), undefined, {shallow: true})
                     }
                   >
                     {authtype !== "login" ? "ログイン" : "新規登録"}に切り替え

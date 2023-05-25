@@ -5,6 +5,7 @@ import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { AppProps } from "next/app";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import ReactCMDK from "../components/react-cmdk";
+import { useRouter } from "next/router";
 
 // import "../styles/cmdk.scss";
 
@@ -17,11 +18,12 @@ const font = Zen_Kaku_Gothic_New({
 function MyApp({
   Component,
   pageProps,
+  
 }: AppProps<{
   initialSession: Session;
 }>) {
   const [supabase] = useState(() => createBrowserSupabaseClient());
-
+  const router = useRouter();
   const [cmdkOpen, setcmdkOpen] = useState(false);
 
   // Toggle the menu when ⌘K is pressed
@@ -42,6 +44,24 @@ function MyApp({
       document.removeEventListener("keydown", down, false);
     };
   }, [down]);
+
+  useEffect(() => {
+    const handleRouteChange = (url, { shallow }) => {
+      console.log(
+        `App is changing to ${url} ${
+          shallow ? 'with' : 'without'
+        } shallow routing`,
+      );
+    };
+ 
+    router.events.on('routeChangeStart', handleRouteChange);
+ 
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router]);
 
   return (
     <SessionContextProvider

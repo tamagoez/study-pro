@@ -80,52 +80,18 @@ const menulist = [
   { title: "時計", url: "clock", command: "⌘C" },
 ];
 
+
+// メモ
+// それぞれのUIの良さがあったため、アイコンボタンはChakra-UI、メニューはAnt Designを使う
+
+
 const items: MenuProps["items"] = [
-  {
-    label: "Menu",
-    key: "MainMenu",
-    icon: <MdMenu />,
-    children: [
-      {
-        type: "group",
-        label: "Item 1",
-        children: [
-          {
-            label: "Option 1",
-            key: "setting:1",
-          },
-          {
-            label: "Option 2",
-            key: "setting:2",
-          },
-        ],
-      },
-      {
-        type: "group",
-        label: "新規追加",
-        children: [
-          {
-            label: "タスクを追加",
-            key: "add:task",
-          },
-          {
-            label: "単語を追加",
-            key: "add:word",
-          },
-          {
-            label: "時計を追加",
-            key: "add:clock",
-          },
-        ],
-      },
-    ],
-  },
   {
     label: <Link href="/login">ログイン</Link>,
     key: "login",
   },
   {
-    label: <Link href="/login">新規登録</Link>,
+    label: <Link href="/signup">新規登録</Link>,
     key: "signup",
   },
 ];
