@@ -67,7 +67,7 @@ export default function Layout({
       <main style={{ paddingTop: "40px" }}>{children}</main>
       {showfooter ? (
         <footer>
-          <Divider />
+          <hr />
           <span>勉強をする全ての人へ by tamagoez</span>
         </footer>
       ) : undefined}
@@ -80,10 +80,8 @@ const menulist = [
   { title: "時計", url: "clock", command: "⌘C" },
 ];
 
-
 // メモ
 // それぞれのUIの良さがあったため、アイコンボタンはChakra-UI、メニューはAnt Designを使う
-
 
 const items: MenuProps["items"] = [
   {
