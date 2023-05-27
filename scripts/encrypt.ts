@@ -12,6 +12,7 @@ function loopproc(
     const utext = itext.codePointAt(0);
     // key配列からkeyを読み込み
     const thisKey = Number(keynum[keyreadid]);
+
     // optionで足すか引くかを分岐
     let arrangeNum;
     if (option === "encrypt") {
@@ -29,6 +30,16 @@ function loopproc(
     } else {
       keyreadid += 1;
     }
+
+    // 変数の確認
+    console.table([
+      { name: "itext", value: itext },
+      { name: "utext(codepoint)", value: utext },
+      { name: "thiskey", value: thisKey },
+      { name: "arrangeNum", value: arrangeNum },
+      { name: "arrangeText", value: arrangeText },
+      { name: "keyreadid", value: keyreadid },
+    ]);
   }
   return resultstring;
 }
