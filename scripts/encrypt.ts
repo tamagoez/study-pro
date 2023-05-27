@@ -39,21 +39,30 @@ function loopproc(
       { name: "arrangeNum", value: arrangeNum },
       { name: "arrangeText", value: arrangeText },
       { name: "keyreadid", value: keyreadid },
+      { name: "option", value: option },
     ]);
   }
   return resultstring;
 }
 
 export function encryptText(text: string, key: string) {
+  console.log("===== START =====");
   const keynum = parseKey(key);
   const part1 = loopproc(text, keynum, "encrypt");
-  return loopproc(part1, keynum.reverse(), "encrypt");
+
+  const restxt = loopproc(part1, keynum.reverse(), "encrypt");
+  console.log("===== END =====");
+  return restxt;
 }
 
 export function decryptText(text: string, key: string) {
+  console.log("===== START =====");
   const keynum = parseKey(key);
   const part1 = loopproc(text, keynum, "decrypt");
-  return loopproc(part1, keynum.reverse(), "decrypt");
+
+  const restxt = loopproc(part1, keynum.reverse(), "decrypt");
+  console.log("===== END =====");
+  return restxt;
 }
 
 function parseKey(key: string) {
