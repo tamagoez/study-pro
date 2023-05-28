@@ -6,6 +6,7 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 export async function middleware(request: NextRequest) {
   // 多分ちゃんとユーザーステータスを取得しているんだと思う
   const res = NextResponse.next();
+  // const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
   await supabase.auth.getSession();
 
