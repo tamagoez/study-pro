@@ -5,7 +5,6 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
   // 多分ちゃんとユーザーステータスを取得しているんだと思う
-  // const res = NextResponse.next();
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
   await supabase.auth.getSession();
@@ -15,12 +14,12 @@ export async function middleware(request: NextRequest) {
   const startsWith = (url) => request.nextUrl.pathname.startsWith(url);
   const eqTo = (url) => url === request.nextUrl.pathname;
 
-  // // ログインなしで許可するURL
-  // const nologin = ["/", "/auth", "/callback"];
-  // // _nextとか/apiを制限したらあかんので...
-  // if (startsWith("/_next") || startsWith("/api")) {
-  //   return res;
-  // }
+  // ログインなしで許可するURL
+  const nologin = ["/", "/auth", "/callback"];
+  // _nextとか/apiを制限したらあかんので...
+  if (startsWith("/_next") || startsWith("/api")) {
+    return res;
+  }
 
   // リダイレクト処理
   if (eqTo("/login")) {
@@ -29,13 +28,13 @@ export async function middleware(request: NextRequest) {
   if (eqTo("/signup")) {
     return NextResponse.redirect(new URL("/auth?mode=signup", request.url));
   }
-  // if (nologin.indexOf(url) === -1) {
-  //   // Auth condition not met, redirect to home page.
-  //   const redirectUrl = request.nextUrl.clone();
-  //   redirectUrl.pathname = "/login";
-  //   redirectUrl.searchParams.set(`moveto`, request.nextUrl.pathname);
-  //   return NextResponse.redirect(redirectUrl);
-  // }
+  if (nologin.indexOf(url) === -1) {
+    // Auth condition not met, redirect to home page.
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/login";
+    redirectUrl.searchParams.set(`moveto`, request.nextUrl.pathname);
+    return NextResponse.redirect(redirectUrl);
+  }
 
-  // return res;
+  return res;
 }

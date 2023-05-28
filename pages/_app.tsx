@@ -1,6 +1,6 @@
 // pages/_app.js
 import { useCallback, useEffect, useState } from "react";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { AppProps } from "next/app";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
@@ -18,11 +18,10 @@ const font = Zen_Kaku_Gothic_New({
 function MyApp({
   Component,
   pageProps,
-  
 }: AppProps<{
   initialSession: Session;
 }>) {
-  const [supabase] = useState(() => createBrowserSupabaseClient());
+  const [supabase] = useState(() => createPagesBrowserClient());
   const router = useRouter();
   const [cmdkOpen, setcmdkOpen] = useState(false);
 
@@ -49,17 +48,17 @@ function MyApp({
     const handleRouteChange = (url, { shallow }) => {
       console.log(
         `App is changing to ${url} ${
-          shallow ? 'with' : 'without'
-        } shallow routing`,
+          shallow ? "with" : "without"
+        } shallow routing`
       );
     };
- 
-    router.events.on('routeChangeStart', handleRouteChange);
- 
+
+    router.events.on("routeChangeStart", handleRouteChange);
+
     // If the component is unmounted, unsubscribe
     // from the event with the `off` method:
     return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
+      router.events.off("routeChangeStart", handleRouteChange);
     };
   }, [router]);
 
