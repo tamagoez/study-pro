@@ -1,6 +1,6 @@
 // pages/_app.js
 import { useCallback, useEffect, useState } from "react";
-import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import { AppProps } from "next/app";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
@@ -21,7 +21,7 @@ function MyApp({
 }: AppProps<{
   initialSession: Session;
 }>) {
-  const [supabase] = useState(() => createPagesBrowserClient());
+  const supabase = createClientComponentClient();
   const router = useRouter();
   const [cmdkOpen, setcmdkOpen] = useState(false);
 
