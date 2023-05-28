@@ -11,8 +11,8 @@
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@next/font": "^13.4.4",
-    "@supabase/auth-helpers-nextjs": "^0.6.1",
-    "@supabase/auth-helpers-react": "^0.3.1",
+    "@supabase/auth-helpers-nextjs": "^0.7.0",
+    "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/supabase-js": "^2.23.0",
     "antd": "^5.5.1",
     "framer-motion": "^10.12.16",
@@ -23,6 +23,9 @@
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.5",
     "sass": "^1.62.1"
+  },
+  "resolutions": {
+    "@types/react": "18.2.7"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
