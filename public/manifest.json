@@ -3,9 +3,9 @@
     "background_color": "#d1ae15",
     "display": "fullscreen",
     "scope": "/",
-    "start_url": "/pwa",
+    "start_url": "/lab/push",
     "name": "StudySharp",
-    "short_name": "Study#",
+    "short_name": "StudySharp",
     "icons": [
         {
             "src": "/icon-192x192.png",
