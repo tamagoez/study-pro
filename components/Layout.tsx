@@ -106,13 +106,13 @@ const loginedMenuItems: MenuProps["items"] = [
 ];
 
 const MenuComponent = ({ router }: { router: any }) => {
-  const user = useUser();
+  // const user = useUser();
   const [current, setCurrent] = useState("");
   return (
     <Menu
       selectedKeys={[current]}
       mode="horizontal"
-      items={user.id ? loginedMenuItems : guestMenuItems}
+      items={false ? loginedMenuItems : guestMenuItems}
       style={{ background: "none", borderBottom: "none", height: "40px" }}
     />
   );
