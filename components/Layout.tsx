@@ -5,6 +5,10 @@ import { MdMenu } from "react-icons/md";
 // import { movePage } from "../scripts/action";
 import { useRouter } from "next/router";
 import { Divider, Menu, MenuProps, Col, Row } from "antd";
+import { useUser } from "@supabase/auth-helpers-react";
+
+// supabase
+const user = useUser();
 
 const APP_TITLE = "StudySharp";
 
@@ -83,7 +87,7 @@ const menulist = [
 // メモ
 // それぞれのUIの良さがあったため、アイコンボタンはChakra-UI、メニューはAnt Designを使う
 
-const items: MenuProps["items"] = [
+const guestMenuItems: MenuProps["items"] = [
   {
     label: <Link href="/login">ログイン</Link>,
     key: "login",
@@ -94,13 +98,21 @@ const items: MenuProps["items"] = [
   },
 ];
 
+const loginedMenuItems: MenuProps["items"] = [
+  {
+    label: <Link href="/logout">ログアウト</Link>,
+    key: "logout",
+  },
+];
+
 const MenuComponent = ({ router }: { router: any }) => {
+  const user = useUser();
   const [current, setCurrent] = useState("");
   return (
     <Menu
       selectedKeys={[current]}
       mode="horizontal"
-      items={items}
+      items={user.id ? loginedMenuItems : guestMenuItems}
       style={{ background: "none", borderBottom: "none", height: "40px" }}
     />
   );

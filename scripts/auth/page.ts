@@ -40,3 +40,12 @@ async function emailSignup(email: string, password: string) {
     throw new Error(error.message);
   }
 }
+
+export async function signOut() {
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
+  } catch (error) {
+    console.error(error);
+  }
+}
