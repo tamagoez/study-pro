@@ -1,6 +1,6 @@
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { Provider } from "@supabase/supabase-js";
-const supabase = createBrowserSupabaseClient();
+const supabase = createPagesBrowserClient();
 
 export async function emailAuth(
   type: "login" | "signup",
