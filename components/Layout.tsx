@@ -8,7 +8,7 @@ import { Divider, Menu, MenuProps, Col, Row } from "antd";
 import { useUser } from "@supabase/auth-helpers-react";
 
 // supabase
-const user = useUser();
+// const user = useUser();
 
 const APP_TITLE = "StudySharp";
 
