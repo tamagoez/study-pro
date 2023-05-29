@@ -6,6 +6,7 @@ import { AppProps } from "next/app";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import ReactCMDK from "../components/react-cmdk";
 import { useRouter } from "next/router";
+import { ChakraProvider } from "@chakra-ui/react";
 
 // import "../styles/cmdk.scss";
 
@@ -71,9 +72,11 @@ function MyApp({
         open={cmdkOpen}
         setOpen={(newState) => setcmdkOpen(newState)}
       />
-      <div className={font.className}>
-        <Component {...pageProps} />
-      </div>
+      <ChakraProvider>
+        <div className={font.className}>
+          <Component {...pageProps} />
+        </div>
+      </ChakraProvider>
     </SessionContextProvider>
   );
 }

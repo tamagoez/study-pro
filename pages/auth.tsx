@@ -5,15 +5,12 @@ import { emailAuth } from "../scripts/auth/page";
 import { useRouter } from "next/router";
 import {
   Button,
-  Col,
-  Form,
-  FormInstance,
+  Container,
+  FormControl,
+  FormLabel,
   Input,
-  Row,
-  Space,
-  Typography,
-} from "antd";
-const { Title } = Typography;
+  Stack,
+} from "@chakra-ui/react";
 
 export default function Auth() {
   // 関数関係の初期設定
@@ -56,7 +53,7 @@ export default function Auth() {
   }
 
   // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
   return (
     <>
       <Layout
@@ -65,100 +62,43 @@ export default function Auth() {
         }
         showfooter={false}
       >
-        <Row justify="center">
-          <Col flex="100px"></Col>
-          <Col flex="auto" style={{ textAlign: "center" }}>
-            <Title level={2} style={{ marginTop: "30px" }}>
-              {authtype[0].toUpperCase() +
-                authtype.substring(1, authtype.length)}
-            </Title>
-            <Form
-              form={form}
-              name="validateOnly"
-              layout="vertical"
-              autoComplete="off"
-              style={{ marginTop: "10px" }}
+        <Container centerContent width="0.7">
+          <FormControl>
+            <FormLabel>Email address</FormLabel>
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Password</FormLabel>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormControl>
+          <Stack direction="row" spacing={4} align="center" mt="5">
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                buttonHandle();
+              }}
             >
-              <Form.Item
-                name="email"
-                label="Email"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                label="Password"
-                rules={[{ required: true }]}
-              >
-                <Input.Password placeholder="input password" />
-              </Form.Item>
-              <Form.Item>
-                <Space>
-                  <SubmitButton
-                    form={form}
-                    text={authtype === "login" ? "ログイン" : "新規登録"}
-                    buttonHandle={() => buttonHandle()}
-                  />
-                  <Button
-                    onClick={() =>
-                      router.replace(
-                        authtype === "login"
-                          ? "/auth?mode=signup"
-                          : "/auth?mode=login",
-                        undefined,
-                        { shallow: true }
-                      )
-                    }
-                  >
-                    {authtype !== "login" ? "ログイン" : "新規登録"}に切り替え
-                  </Button>
-                </Space>
-              </Form.Item>
-            </Form>
-          </Col>
-          <Col flex="100px"></Col>
-        </Row>
+              {authtype === "login" ? "ログイン" : "新規登録"}
+            </Button>
+            <Button
+              colorScheme="gray"
+              onClick={() =>
+                setAuthtype(authtype === "login" ? "signup" : "login")
+              }
+            >
+              {authtype === "login" ? "新規登録" : "ログイン"}に切り替え
+            </Button>
+          </Stack>
+        </Container>
       </Layout>
     </>
   );
 }
-
-const SubmitButton = ({
-  form,
-  text,
-  buttonHandle,
-}: {
-  form: FormInstance;
-  text: string;
-  buttonHandle: any;
-}) => {
-  const [submittable, setSubmittable] = useState(false);
-
-  // Watch all values
-  const values = Form.useWatch([], form);
-
-  useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setSubmittable(true);
-      },
-      () => {
-        setSubmittable(false);
-      }
-    );
-  }, [values]);
-
-  return (
-    <Button
-      type="primary"
-      htmlType="submit"
-      disabled={!submittable}
-      onClick={() => {
-        buttonHandle();
-      }}
-    >
-      {text}
-    </Button>
-  );
-};

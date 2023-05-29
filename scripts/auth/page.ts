@@ -33,7 +33,7 @@ async function emailSignup(email: string, password: string) {
       password: password,
     });
     if (error) throw error;
-    return true;
+    return;
   } catch (error: any) {
     console.error(error.message);
     // alert(error.message);
