@@ -35,11 +35,13 @@ export default function Auth() {
   }, [router]);
 
   useEffect(() => {
-    if (router.query.mode && (router.query.mode === "login" || router.query.mode === "signup")) {
+    if (
+      router.query.mode &&
+      (router.query.mode === "login" || router.query.mode === "signup")
+    ) {
       setAuthtype(router.query.mode);
     }
   }, [router.query.mode]);
-  
 
   // Authプロセスの実行
   async function authExec() {
@@ -49,6 +51,9 @@ export default function Auth() {
     } catch (err) {}
   }
 
+  async function buttonHandle() {
+    await emailAuth(authtype, email, password);
+  }
 
   // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える
   const [form] = Form.useForm();
@@ -93,10 +98,17 @@ export default function Auth() {
                   <SubmitButton
                     form={form}
                     text={authtype === "login" ? "ログイン" : "新規登録"}
+                    buttonHandle={() => buttonHandle()}
                   />
                   <Button
                     onClick={() =>
-                      router.replace((authtype === "login" ? "/auth?mode=signup" : "/auth?mode=login"), undefined, {shallow: true})
+                      router.replace(
+                        authtype === "login"
+                          ? "/auth?mode=signup"
+                          : "/auth?mode=login",
+                        undefined,
+                        { shallow: true }
+                      )
                     }
                   >
                     {authtype !== "login" ? "ログイン" : "新規登録"}に切り替え
@@ -112,7 +124,15 @@ export default function Auth() {
   );
 }
 
-const SubmitButton = ({ form, text }: { form: FormInstance; text: string }) => {
+const SubmitButton = ({
+  form,
+  text,
+  buttonHandle,
+}: {
+  form: FormInstance;
+  text: string;
+  buttonHandle: any;
+}) => {
   const [submittable, setSubmittable] = useState(false);
 
   // Watch all values
@@ -130,7 +150,14 @@ const SubmitButton = ({ form, text }: { form: FormInstance; text: string }) => {
   }, [values]);
 
   return (
-    <Button type="primary" htmlType="submit" disabled={!submittable}>
+    <Button
+      type="primary"
+      htmlType="submit"
+      disabled={!submittable}
+      onClick={() => {
+        buttonHandle();
+      }}
+    >
       {text}
     </Button>
   );

@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   if (nologin.indexOf(url) === -1) {
     // Auth condition not met, redirect to home page.
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/login";
+    redirectUrl.pathname = "/auth?mode=login";
     redirectUrl.searchParams.set(`moveto`, request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
   }
