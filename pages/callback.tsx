@@ -1,16 +1,12 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-const supabase = createBrowserSupabaseClient();
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+const supabase = createPagesBrowserClient();
 
 export default function Callback() {
   const router = useRouter();
   let redirecturl = "/dashboard";
-
-  async function checkprofile() {
-    let profiledata;
-  }
 
   useEffect(() => {
     if (
@@ -26,7 +22,7 @@ export default function Callback() {
   }, []);
   return (
     <>
-      <p>You will be redirected soon</p>
+      <p>StudySharpへようこそ!</p>
     </>
   );
 }

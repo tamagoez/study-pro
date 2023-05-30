@@ -15,7 +15,8 @@ export async function middleware(request: NextRequest) {
   const eqTo = (url) => url === request.nextUrl.pathname;
 
   // ログインなしで許可するURL
-  const nologin = ["/", "/auth", "/callback"];
+  // ServiceWorkerをブロックしてはいけない
+  const nologin = ["/", "/auth", "/callback", "/sw.js"];
   // _nextとか/apiを制限したらあかんので...
   if (startsWith("/_next") || startsWith("/api")) {
     return res;
@@ -31,10 +32,12 @@ export async function middleware(request: NextRequest) {
   if (nologin.indexOf(url) === -1) {
     // Auth condition not met, redirect to home page.
     const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/auth?mode=login";
+    redirectUrl.pathname = "/auth";
+    redirectUrl.searchParams.set("mode", "login");
     redirectUrl.searchParams.set(`moveto`, request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
   }
 
+  // プロフィールを確認する
   return res;
 }
