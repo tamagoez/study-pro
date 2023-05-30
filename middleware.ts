@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
   // ServiceWorker等をブロックしてはいけない
   const nologin = ["/", "/auth", "/callback", "/sw.js"];
   // _nextとか/apiを制限したらあかんので...
-  if (startsWith("/_next") || startsWith("/api" || startsWith("/workbox-"))) {
+  if (startsWith("/_next") || startsWith("/api") || startsWith("/workbox-")) {
     return res;
   }
 
