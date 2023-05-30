@@ -15,10 +15,10 @@ export async function middleware(request: NextRequest) {
   const eqTo = (url) => url === request.nextUrl.pathname;
 
   // ログインなしで許可するURL
-  // ServiceWorkerをブロックしてはいけない
+  // ServiceWorker等をブロックしてはいけない
   const nologin = ["/", "/auth", "/callback", "/sw.js"];
   // _nextとか/apiを制限したらあかんので...
-  if (startsWith("/_next") || startsWith("/api")) {
+  if (startsWith("/_next") || startsWith("/api" || startsWith("/workbox-"))) {
     return res;
   }
 
