@@ -1,5 +1,6 @@
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { Provider } from "@supabase/supabase-js";
+import { ToastProp } from "../../interfaces/toast/toast";
 const supabase = createPagesBrowserClient();
 
 export async function emailAuth(
@@ -7,38 +8,34 @@ export async function emailAuth(
   email: string,
   password: string
 ) {
-  if (type === "login") await emailLogin(email, password);
-  if (type === "signup") await emailSignup(email, password);
+  let result: ToastProp;
+  if (type === "login") result = await emailLogin(email, password);
+  if (type === "signup") result = await emailSignup(email, password);
+  return result;
 }
 
 async function emailLogin(email: string, password: string) {
-  try {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-    if (error) throw error;
-    return true;
-  } catch (error: any) {
-    console.error(error.message);
-    // alert(error.message);
-    throw new Error(error.message);
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password,
+  });
+  if (error) {
+    console.error(error);
+    return { status: "error", description: error.message };
   }
+  return { status: "success" };
 }
 
 async function emailSignup(email: string, password: string) {
-  try {
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-    if (error) throw error;
-    return;
-  } catch (error: any) {
-    console.error(error.message);
-    // alert(error.message);
-    throw new Error(error.message);
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+  });
+  if (error) {
+    console.error(error);
+    return { status: "error", description: error.message };
   }
+  return { status: "success", description: "メールを確認してください" };
 }
 
 export async function signOut() {

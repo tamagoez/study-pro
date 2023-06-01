@@ -49,7 +49,7 @@ export default function Auth() {
   }
 
   async function buttonHandle() {
-    await emailAuth(authtype, email, password);
+    const result = await emailAuth(authtype, email, password);
   }
 
   // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える

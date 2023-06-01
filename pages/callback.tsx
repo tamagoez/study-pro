@@ -6,23 +6,24 @@ const supabase = createPagesBrowserClient();
 
 export default function Callback() {
   const router = useRouter();
-  let redirecturl = "/dashboard";
 
   useEffect(() => {
+    let redirecturl = "/dashboard";
     if (
       typeof window !== "undefined" &&
-      sessionStorage.getItem("moveto") != "null"
+      localStorage.getItem("moveto") != "null"
     ) {
-      redirecturl = sessionStorage.getItem("moveto");
+      redirecturl = localStorage.getItem("moveto");
     }
-    sessionStorage.removeItem("moveto");
+    localStorage.removeItem("moveto");
     supabase.auth.onAuthStateChange((event, session) => {
-      if (event == "SIGNED_IN") location.replace("/dashboard");
+      if (event == "SIGNED_IN") location.replace(redirecturl);
     });
-  }, []);
+  }, [router]);
+
   return (
     <>
-      <p>StudySharpへようこそ!</p>
+      <p>少々お待ちください</p>
     </>
   );
 }
