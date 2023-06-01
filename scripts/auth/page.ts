@@ -1,6 +1,6 @@
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { Provider } from "@supabase/supabase-js";
-import { ToastProp } from "../../interfaces/toast/toast";
+// import { ToastProp } from "../../interfaces/toast/toast";
 const supabase = createPagesBrowserClient();
 
 export async function emailAuth(
@@ -8,7 +8,7 @@ export async function emailAuth(
   email: string,
   password: string
 ) {
-  let result: ToastProp;
+  let result;
   if (type === "login") result = await emailLogin(email, password);
   if (type === "signup") result = await emailSignup(email, password);
   return result;
