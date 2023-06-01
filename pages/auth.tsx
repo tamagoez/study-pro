@@ -11,6 +11,7 @@ import {
   Input,
   Stack,
 } from "@chakra-ui/react";
+import { toastError, toastSuccess } from "../components/toast/toast";
 
 export default function Auth() {
   // 関数関係の初期設定
@@ -50,6 +51,12 @@ export default function Auth() {
 
   async function buttonHandle() {
     const result = await emailAuth(authtype, email, password);
+    if (result.status === "success") {
+      toastSuccess(result.description);
+    }
+    if (result.status === "error") {
+      toastError(result.description);
+    }
   }
 
   // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える
