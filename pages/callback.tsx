@@ -9,6 +9,7 @@ export default function Callback() {
 
   useEffect(() => {
     let redirecturl = "/dashboard";
+    // 正直useEffect内だったらwindows typeofチェックいらないと思う
     if (
       typeof window !== "undefined" &&
       localStorage.getItem("moveto") != "null"

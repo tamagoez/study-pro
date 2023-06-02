@@ -1,5 +1,6 @@
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { Provider } from "@supabase/supabase-js";
+import { toastError, toastSuccess } from "../../components/toast/toast";
 // import { ToastProp } from "../../interfaces/toast/toast";
 const supabase = createPagesBrowserClient();
 
@@ -8,10 +9,8 @@ export async function emailAuth(
   email: string,
   password: string
 ) {
-  let result;
-  if (type === "login") result = await emailLogin(email, password);
-  if (type === "signup") result = await emailSignup(email, password);
-  return result;
+  if (type === "login") await emailLogin(email, password);
+  if (type === "signup") await emailSignup(email, password);
 }
 
 async function emailLogin(email: string, password: string) {
@@ -21,9 +20,9 @@ async function emailLogin(email: string, password: string) {
   });
   if (error) {
     console.error(error);
-    return { status: "error", description: error.message };
+    toastError(error.message);
   }
-  return { status: "success" };
+  toastSuccess("ログインしました!");
 }
 
 async function emailSignup(email: string, password: string) {
@@ -33,9 +32,9 @@ async function emailSignup(email: string, password: string) {
   });
   if (error) {
     console.error(error);
-    return { status: "error", description: error.message };
+    toastError(error.message);
   }
-  return { status: "success", description: "メールを確認してください" };
+  toastSuccess("メールを確認してください");
 }
 
 export async function signOut() {

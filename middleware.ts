@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   // 多分ちゃんとユーザーステータスを取得しているんだと思う
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
-  await supabase.auth.getSession();
+  const session = await supabase.auth.getSession();
 
   // URLマッチショートカット
   const url = request.nextUrl.pathname;
@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
   if (eqTo("/signup")) {
     return NextResponse.redirect(new URL("/auth?mode=signup", request.url));
   }
-  if (nologin.indexOf(url) === -1) {
+  if (nologin.indexOf(url) === -1 && !session.data.session.user.id) {
     // Auth condition not met, redirect to home page.
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/auth";
@@ -39,5 +39,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // プロフィールを確認する
+  if (eqTo("/")) {
+    return NextResponse.rewrite(new URL("/dashboard", request.url));
+  }
   return res;
 }
