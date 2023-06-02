@@ -1,7 +1,11 @@
+import Layout from "../components/Layout";
+
 export default function Dashboard() {
   return (
     <>
-      <p>ダッシュボード</p>
+      <Layout titleprop="ダッシュボード">
+        <p>ダッシュボード</p>
+      </Layout>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { Provider } from "@supabase/supabase-js";
 import { toastError, toastSuccess } from "../../components/toast/toast";
+import { useRouter } from "next/router";
 // import { ToastProp } from "../../interfaces/toast/toast";
 const supabase = createPagesBrowserClient();
 
@@ -14,6 +15,7 @@ export async function emailAuth(
 }
 
 async function emailLogin(email: string, password: string) {
+  const router = useRouter();
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
@@ -21,8 +23,10 @@ async function emailLogin(email: string, password: string) {
   if (error) {
     console.error(error);
     toastError(error.message);
+  } else {
+    toastSuccess("ログインしました!");
+    router.replace("/callback");
   }
-  toastSuccess("ログインしました!");
 }
 
 async function emailSignup(email: string, password: string) {
@@ -41,11 +45,11 @@ async function emailSignup(email: string, password: string) {
 }
 
 export async function signOut() {
-  try {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
-    return;
-  } catch (error) {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
     console.error(error);
+    toastError(error.message);
+    return false;
   }
+  return true;
 }
