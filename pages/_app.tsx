@@ -10,6 +10,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
+
 // import "../styles/cmdk.scss";
 
 const font = Zen_Kaku_Gothic_New({
