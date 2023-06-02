@@ -29,6 +29,9 @@ async function emailSignup(email: string, password: string) {
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
+    options: {
+      emailRedirectTo: `${location.hostname}/callback`,
+    },
   });
   if (error) {
     console.error(error);
