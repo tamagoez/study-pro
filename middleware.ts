@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req: request, res });
   const session = await supabase.auth.getSession();
-  const userid = session.data.session.user.id;
+  const userid = session.data.session.user?.id;
 
   // URLマッチショートカット
   const url = request.nextUrl.pathname;
