@@ -27,7 +27,7 @@ export default function TodoPage() {
   }
   useEffect(() => {
     fetchTasks();
-  });
+  }, []);
   function setDone(value: boolean, index: number) {
     const newArray = [...tododata]; // 新しい配列を作成
     newArray[index].done = value; // 指定した要素の値を変更
@@ -45,10 +45,11 @@ export default function TodoPage() {
         <LinkBox
           as="article"
           maxW="sm"
-          p="5"
+          p="1"
           borderWidth="1px"
           rounded="md"
           onClick={onOpen}
+          style={{ cursor: "pointer" }}
         >
           タスクを追加する
         </LinkBox>

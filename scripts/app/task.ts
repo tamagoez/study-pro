@@ -21,14 +21,14 @@ export async function setTaskDone(id: string, value: boolean) {
 
 export async function insertTask(
   title: string,
-  timestamp: string,
+  limit: string,
   done: boolean,
   description?: string
 ) {
   const user = useUser();
   const { data, error } = await supabase
     .from("task")
-    .insert({ title, description, timestamp, done, user: user.id })
+    .insert({ title, description, limit, done, user: user.id })
     .select()
     .single();
   if (error) {

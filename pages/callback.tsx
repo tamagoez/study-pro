@@ -17,7 +17,7 @@ export default function Callback() {
     supabase.auth.onAuthStateChange((event, session) => {
       if (event == "SIGNED_IN") location.replace(redirecturl);
     });
-  }, [router]);
+  }, []);
 
   return (
     <>
