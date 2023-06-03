@@ -52,7 +52,7 @@ export default function Auth() {
   async function buttonHandle() {
     const res = await emailAuth(authtype, email, password);
     if (res === true) {
-      router.replace("/push");
+      router.replace("/callback");
     }
   }
 
@@ -73,6 +73,7 @@ export default function Auth() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
             />
           </FormControl>
           <FormControl>
@@ -81,6 +82,7 @@ export default function Auth() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
             />
           </FormControl>
           <Stack direction="row" spacing={4} align="center" mt="5">
