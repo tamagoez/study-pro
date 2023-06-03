@@ -41,12 +41,14 @@ export async function insertTask(
 }
 
 export async function selectTask(): Promise<TodoInterface[]> {
+  console.log("called");
   const user = useUser();
   const { data, error } = await supabase
     .from("task")
     .select("*")
     .eq("userid", user.id);
   if (error) {
+    console.error(error);
     toastError(error.message);
     return [];
   } else {

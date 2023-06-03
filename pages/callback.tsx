@@ -7,16 +7,29 @@ const supabase = createPagesBrowserClient();
 export default function Callback() {
   const router = useRouter();
 
+  // 正直ChatGPTに直してもらった
   useEffect(() => {
     let redirecturl = "/dashboard";
-    // 正直useEffect内だったらwindows typeofチェックいらないと思う
     if (typeof window !== "undefined" && localStorage.getItem("moveto")) {
       redirecturl = localStorage.getItem("moveto");
     }
     localStorage.removeItem("moveto");
+    let isTabMoved = false;
+    const handleTabMove = () => {
+      isTabMoved = true;
+    };
+    window.addEventListener("beforeunload", handleTabMove);
     supabase.auth.onAuthStateChange((event, session) => {
-      if (event == "SIGNED_IN") location.replace(redirecturl);
+      if (event === "SIGNED_IN") {
+        window.removeEventListener("beforeunload", handleTabMove);
+        if (!isTabMoved) {
+          location.replace(redirecturl);
+        }
+      }
     });
+    return () => {
+      window.removeEventListener("beforeunload", handleTabMove);
+    };
   }, []);
 
   return (

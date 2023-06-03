@@ -17,9 +17,21 @@ export async function middleware(request: NextRequest) {
 
   // ログインなしで許可するURL
   // ServiceWorker等をブロックしてはいけない
-  const nologin = ["/", "/auth", "/callback", "/sw.js"];
+  const nologin = [
+    "/",
+    "/auth",
+    "/callback",
+    "/sw.js",
+    "/manifest.json",
+    "/favicon.ico",
+  ];
   // _nextとか/apiを制限したらあかんので...
-  if (startsWith("/_next") || startsWith("/api") || startsWith("/workbox-")) {
+  if (
+    startsWith("/_next") ||
+    startsWith("/api") ||
+    startsWith("/workbox-") ||
+    startsWith("icon-")
+  ) {
     return res;
   }
 

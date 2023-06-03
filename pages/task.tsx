@@ -81,7 +81,7 @@ function TodoComponent({
 }) {
   return (
     <Stack>
-      <Checkbox isChecked={done} onChange={(e) => setDone(e.target.value)}>
+      <Checkbox isChecked={done} onChange={(e) => setDone(e.target.checked)}>
         {title}
         <Text fontSize="md">{description}</Text>
       </Checkbox>
