@@ -10,12 +10,13 @@ export async function emailAuth(
   email: string,
   password: string
 ) {
-  if (type === "login") await emailLogin(email, password);
+  let res;
+  if (type === "login") res = await emailLogin(email, password);
   if (type === "signup") await emailSignup(email, password);
+  if (res) return true;
 }
 
 async function emailLogin(email: string, password: string) {
-  const router = useRouter();
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
@@ -25,7 +26,7 @@ async function emailLogin(email: string, password: string) {
     toastError(error.message);
   } else {
     toastSuccess("ログインしました!");
-    router.replace("/callback");
+    return true;
   }
 }
 

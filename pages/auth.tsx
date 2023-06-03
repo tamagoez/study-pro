@@ -50,7 +50,10 @@ export default function Auth() {
   }
 
   async function buttonHandle() {
-    await emailAuth(authtype, email, password);
+    const res = await emailAuth(authtype, email, password);
+    if (res === true) {
+      router.replace("/push");
+    }
   }
 
   // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える
