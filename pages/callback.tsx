@@ -1,35 +1,33 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 const supabase = createPagesBrowserClient();
 
 export default function Callback() {
   const router = useRouter();
+  const [moveTo, setMoveTo] = useState("/dashboard");
 
-  // 正直ChatGPTに直してもらった
   useEffect(() => {
-    let redirecturl = "/dashboard";
-    if (typeof window !== "undefined" && localStorage.getItem("moveto")) {
-      redirecturl = localStorage.getItem("moveto");
+    if (typeof router.query.moveTo === "string") {
+      setMoveTo(router.query.moveTo);
     }
-    localStorage.removeItem("moveto");
-    let isTabMoved = false;
-    const handleTabMove = () => {
-      isTabMoved = true;
-    };
-    window.addEventListener("beforeunload", handleTabMove);
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN") {
-        window.removeEventListener("beforeunload", handleTabMove);
-        if (!isTabMoved) {
-          location.replace(redirecturl);
-        }
-      }
-    });
-    return () => {
-      window.removeEventListener("beforeunload", handleTabMove);
-    };
+  }, [router.query.moveTo]);
+
+  // onAuthStateChangeのコールバック関数
+  const handleAuthStateChange = (event: string, session: any) => {
+    if (event === "SIGNED_IN") {
+      // ログイン時の処理
+      location.replace(moveTo);
+    }
+  };
+
+  useEffect(() => {
+    // onAuthStateChangeの購読
+    supabase.auth.onAuthStateChange(handleAuthStateChange);
+
+    // コンポーネントのクリーンアップ時に購読解除
+    return () => {};
   }, []);
 
   return (

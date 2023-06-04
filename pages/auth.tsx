@@ -16,7 +16,7 @@ import { toastError, toastSuccess } from "../components/toast/toast";
 export default function Auth() {
   // 関数関係の初期設定
   const [authtype, setAuthtype] = useState<"login" | "signup">("login");
-  const [moveTo, setMoveTo] = useState("/dashboard");
+  const [moveTo, setMoveTo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -52,7 +52,7 @@ export default function Auth() {
   async function buttonHandle() {
     const res = await emailAuth(authtype, email, password);
     if (res === true) {
-      router.replace("/callback");
+      router.replace(`/callback?moveTo=${moveTo}`);
     }
   }
 

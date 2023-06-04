@@ -51,7 +51,9 @@ export default function Layout({
           margin-top: 6px;
         }
         main {
-          min-width: 100vw;
+           {
+            /* min-width: 100vw; */
+          }
           min-height: 100vh;
         }
       `}</style>

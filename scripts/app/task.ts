@@ -45,13 +45,13 @@ export async function selectTask(): Promise<TodoInterface[]> {
   const user = useUser();
   const { data, error } = await supabase
     .from("task")
-    .select("*")
+    .select("id, title, description, limit, done")
     .eq("userid", user.id);
   if (error) {
     console.error(error);
     toastError(error.message);
     return [];
   } else {
-    return data as TodoInterface[];
+    return data;
   }
 }
