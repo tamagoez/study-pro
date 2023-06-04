@@ -6,8 +6,8 @@ const withPWA = require("next-pwa")({
 
 module.exports = withPWA({
   // 開発環境での設定
-  devIndicators: {
-    autoPrerender: false, // プリレンダリングの自動化を無効にする
-  },
-  minify: false, // minify（圧縮）を無効にする
+  // devIndicators: {
+  //   autoPrerender: false, // プリレンダリングの自動化を無効にする
+  // },
+  // minify: false, // minify（圧縮）を無効にする
 });
