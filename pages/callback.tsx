@@ -1,18 +1,13 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+
 const supabase = createPagesBrowserClient();
 
 export default function Callback() {
   const router = useRouter();
   const [moveTo, setMoveTo] = useState("/dashboard");
-
-  useEffect(() => {
-    if (typeof router.query.moveTo === "string") {
-      setMoveTo(router.query.moveTo);
-    }
-  }, [router.query.moveTo]);
+  const { query, isReady } = useRouter();
 
   // onAuthStateChangeのコールバック関数
   const handleAuthStateChange = (event: string, session: any) => {
@@ -23,12 +18,12 @@ export default function Callback() {
   };
 
   useEffect(() => {
-    // onAuthStateChangeの購読
+    if (typeof query.moveTo === "string") {
+      setMoveTo(query.moveTo);
+    }
+    console.log(moveTo);
     supabase.auth.onAuthStateChange(handleAuthStateChange);
-
-    // コンポーネントのクリーンアップ時に購読解除
-    return () => {};
-  }, []);
+  }, [isReady, query.moveTo]);
 
   return (
     <>

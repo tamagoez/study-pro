@@ -17,19 +17,31 @@ import {
 } from "@chakra-ui/react";
 import { selectTask } from "../scripts/app/task";
 import { TodoInterface } from "../interfaces/todo";
+import { GetServerSideProps } from "next";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-export default function TodoPage() {
-  const [tododata, setTododata] = useState<TodoInterface[]>([]);
+export const getServerSideProps = async (ctx) => {
+  // Create authenticated Supabase Client
+  const supabase = createPagesServerClient(ctx);
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  async function fetchTasks() {
-    const data = await selectTask();
-    setTododata([...data]);
-  }
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+  const data = await selectTask(supabase);
+
+  return {
+    props: {
+      data: data,
+    },
+  };
+};
+
+export default function TodoPage({ data }) {
+  const [tododata, setTododata] = useState<TodoInterface[]>(data);
+
   function setDone(value: boolean, index: number) {
-    const newArray = [...tododata]; // 新しい配列を作成
+    const newArray = tododata; // 新しい配列を作成
     newArray[index].done = value; // 指定した要素の値を変更
     setTododata(newArray);
   }

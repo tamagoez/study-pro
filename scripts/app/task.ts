@@ -1,4 +1,7 @@
-import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
+import {
+  SupabaseClient,
+  createPagesBrowserClient,
+} from "@supabase/auth-helpers-nextjs";
 import { toastError, toastSuccess } from "../../components/toast/toast";
 import { TodoInterface } from "../../interfaces/todo";
 import { useUser } from "@supabase/auth-helpers-react";
@@ -40,9 +43,11 @@ export async function insertTask(
   }
 }
 
-export async function selectTask(): Promise<TodoInterface[]> {
+export async function selectTask(
+  supabase: SupabaseClient<any, "public", any>
+): Promise<TodoInterface[]> {
   console.log("called");
-  const user = useUser();
+  const user = (await supabase.auth.getUser()).data.user;
   const { data, error } = await supabase
     .from("task")
     .select("id, title, description, limit, done")
