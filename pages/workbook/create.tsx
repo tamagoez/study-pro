@@ -16,7 +16,7 @@ export default function WorkbookCreate() {
   return (
     <Layout titleprop="ワークブックを作成">
       <Text>ワークブック名</Text>
-      <Input onChange={(e) => setWorkbookName(e.target.name)}></Input>
+      <Input onChange={(e) => setWorkbookName(e.target.value)}></Input>
       <Text>サブタイトル</Text>
       <Input onChange={(e) => setWorkbookSubtitle(e.target.value)}></Input>
       <Button
