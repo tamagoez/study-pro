@@ -1,4 +1,6 @@
+import NextLink from "next/link";
 import { Badge, Box, Text } from "@chakra-ui/react";
+
 export function WorkbookCard({
   title,
   subtitle,
@@ -15,7 +17,14 @@ export function WorkbookCard({
   subject: number;
 }) {
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
+    <Box
+      maxW="sm"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      as={NextLink}
+      href={`/workbook/${id}/edit`}
+    >
       <Box p="6">
         <Box display="flex" alignItems="baseline">
           {own ? (
@@ -42,6 +51,15 @@ export function WorkbookCard({
           noOfLines={1}
         >
           {title}
+        </Box>
+        <Box
+          color="gray.500"
+          fontWeight="semibold"
+          letterSpacing="wide"
+          fontSize="xs"
+          ml="2"
+        >
+          #{id}
         </Box>
 
         <Box>{subtitle}</Box>
