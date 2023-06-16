@@ -3,7 +3,7 @@ import { getUserid } from "../auth/user";
 const supabase = createPagesBrowserClient();
 
 export async function createWorkbook(title: string, subtitle: string) {
-  const userid = getUserid();
+  const userid = await getUserid();
   const { data, error } = await supabase
     .from("workbooks")
     .insert({ title: title, subtitle: subtitle, ownerid: userid })
