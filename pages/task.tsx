@@ -15,30 +15,30 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { selectTask } from "../scripts/app/task";
+// import { selectTask } from "../scripts/app/task";
 import { TodoInterface } from "../interfaces/todo";
 import { GetServerSideProps } from "next";
 import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 
-export const getServerSideProps = async (ctx) => {
-  // Create authenticated Supabase Client
-  const supabase = createPagesServerClient(ctx);
-  // Check if we have a session
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+// export const getServerSideProps = async (ctx) => {
+//   // Create authenticated Supabase Client
+//   const supabase = createPagesServerClient(ctx);
+//   // Check if we have a session
+//   const {
+//     data: { session },
+//   } = await supabase.auth.getSession();
 
-  const data = await selectTask(supabase);
+//   // const data = await selectTask(supabase);
 
-  return {
-    props: {
-      data: data,
-    },
-  };
-};
+//   // return {
+//   //   props: {
+//   //     data: data,
+//   //   },
+//   // };
+// };
 
-export default function TodoPage({ data }) {
-  const [tododata, setTododata] = useState<TodoInterface[]>(data);
+export default function TodoPage() {
+  const [tododata, setTododata] = useState<TodoInterface[]>();
 
   function setDone(value: boolean, index: number) {
     const newArray = tododata; // 新しい配列を作成

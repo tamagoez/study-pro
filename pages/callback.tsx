@@ -28,6 +28,7 @@ export default function Callback() {
   return (
     <>
       <p>少々お待ちください</p>
+      リダイレクトされない場合は<a href="/dashboard">ここをクリック</a>
     </>
   );
 }
