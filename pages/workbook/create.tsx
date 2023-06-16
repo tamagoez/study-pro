@@ -1,17 +1,30 @@
 import { Button, Input, Text } from "@chakra-ui/react";
 import { useState } from "react";
+import { createWorkbook } from "../../scripts/workbook/book";
+import { useRouter } from "next/router";
 
 export default function WorkbookCreate() {
+  const router = useRouter();
   const [workbookName, setWorkbookName] = useState("");
   const [workbookSubtitle, setWorkbookSubtitle] = useState("");
+
+  async function createWorkbookButton() {
+    const returnid = await createWorkbook(workbookName, workbookSubtitle);
+    router.replace(`/workbook/${returnid}/edit`);
+  }
   return (
     <>
       <Text>ワークブックを作成</Text>
       <Text>ワークブック名</Text>
-      <Input></Input>
+      <Input onChange={(e) => setWorkbookName(e.target.name)}></Input>
       <Text>サブタイトル</Text>
-      <Input></Input>
-      <Button>作成する</Button>
+      <Input onChange={(e) => setWorkbookSubtitle(e.target.value)}></Input>
+      <Button
+        disabled={!workbookName ?? !workbookSubtitle}
+        onClick={() => createWorkbookButton()}
+      >
+        作成する
+      </Button>
     </>
   );
 }

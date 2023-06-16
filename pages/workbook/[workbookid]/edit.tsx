@@ -14,5 +14,5 @@ export default function WorkbookEdit() {
     console.log(workbookId);
   }, [isReady, query.workbookId]);
 
-  return <></>;
+  return <>{workbookId}</>;
 }

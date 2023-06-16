@@ -1,7 +1,8 @@
-import { Badge, Box } from "@chakra-ui/react";
+import { Badge, Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { fetchMyWorkbooks } from "../../scripts/workbook/books";
 import Layout from "../../components/Layout";
+import { WorkbookCard } from "../../components/workbook/card";
 
 export default function WorkbookIndex() {
   const [loading, setLoading] = useState(true);
@@ -19,37 +20,16 @@ export default function WorkbookIndex() {
   return (
     <Layout titleprop="ワークブック一覧">
       {loading ? <p>loading...</p> : null}
+      <Text>あなたが作成したワークブック</Text>
       {myWorkbooks.map((x) => (
-        <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden">
-          <Box p="6">
-            <Box display="flex" alignItems="baseline">
-              <Badge borderRadius="full" px="2" colorScheme="teal">
-                Own
-              </Badge>
-              <Box
-                color="gray.500"
-                fontWeight="semibold"
-                letterSpacing="wide"
-                fontSize="xs"
-                ml="2"
-              >
-                Made by @{x.id}
-              </Box>
-            </Box>
-
-            <Box
-              mt="1"
-              fontWeight="semibold"
-              as="h4"
-              lineHeight="tight"
-              noOfLines={1}
-            >
-              {x.title}
-            </Box>
-
-            <Box>{x.subtitle}</Box>
-          </Box>
-        </Box>
+        <WorkbookCard
+          title={x.title}
+          subtitle={x.subtitle}
+          ownerid={x.ownerid}
+          own={true}
+          id={x.id}
+          subject={x.subject}
+        />
       ))}
     </Layout>
   );
