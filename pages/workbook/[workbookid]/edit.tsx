@@ -4,16 +4,8 @@ import Layout from "../../../components/Layout";
 
 export default function WorkbookEdit() {
   const router = useRouter();
-  const { query, isReady } = useRouter();
+  const { workbookid } = router.query;
 
-  const [workbookId, setWorkbookId] = useState("");
-
-  useEffect(() => {
-    if (typeof query.workbookId === "string") {
-      setWorkbookId(query.workbookId);
-    }
-    console.log(workbookId);
-  }, [isReady, query.workbookId]);
-
+  const [workbookId, setWorkbookId] = useState(workbookid);
   return <Layout titleprop="ワークブックを編集">{workbookId}</Layout>;
 }
