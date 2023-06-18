@@ -22,6 +22,7 @@ export default function Dashboard() {
         <p>ダッシュボード</p>
         {menuItem.map((x) => (
           <DashboardCard
+            key={x.url}
             title={x.title}
             description={x.description}
             url={x.url}

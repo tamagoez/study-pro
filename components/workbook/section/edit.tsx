@@ -9,10 +9,13 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function SectionEditTable({ sectionid }: { sectionid: string }) {
-  const [items, setItems] = useState([]);
+  const [qItems, setQItems] = useState([]);
+  useEffect(() => {
+    return;
+  }, []);
   return (
     <TableContainer>
       <Table variant="simple">
@@ -25,7 +28,7 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
           </Tr>
         </Thead>
         <Tbody>
-          {items.map((x) => (
+          {qItems.map((x) => (
             <Tr>
               <Td>{x.question}</Td>
               <Td>{x.answer}</Td>

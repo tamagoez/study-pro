@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { ChakraProvider } from "@chakra-ui/react";
 import { Toaster } from "react-hot-toast";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/react";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -78,6 +79,7 @@ function MyApp({
       />
       <Toaster />
       <ToastContainer />
+      <Analytics />
       <ChakraProvider>
         <div className={font.className}>
           <Component {...pageProps} />

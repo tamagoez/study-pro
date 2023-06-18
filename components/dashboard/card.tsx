@@ -11,15 +11,8 @@ export function DashboardCard({
   url: string;
 }) {
   return (
-    <Box
-      maxW="sm"
-      borderWidth="2px"
-      borderRadius="lg"
-      overflow="hidden"
-      as={NextLink}
-      href={url}
-    >
-      <Box p="6">
+    <Box maxW="sm" overflow="hidden" as={NextLink} href={url}>
+      <Box p="4" borderColor="gray.200" borderWidth="1px" borderRadius="lg">
         <Box
           mt="1"
           fontWeight="semibold"
@@ -29,7 +22,6 @@ export function DashboardCard({
         >
           {title}
         </Box>
-
         <Box>{description}</Box>
       </Box>
     </Box>
