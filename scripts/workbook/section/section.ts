@@ -30,3 +30,13 @@ export async function createSection(
   }
   return data.url;
 }
+
+export async function getSectionUniqueId(workbookid: string, url: string) {
+  const { data, error } = await supabase
+    .from("questions")
+    .select("id")
+    .eq("workbookid", workbookid)
+    .eq("url", "url")
+    .single();
+  return data.id;
+}

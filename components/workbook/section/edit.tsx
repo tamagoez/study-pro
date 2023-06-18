@@ -14,12 +14,14 @@ import { useEffect, useState } from "react";
 export function SectionEditTable({ sectionid }: { sectionid: string }) {
   const [qItems, setQItems] = useState([]);
   useEffect(() => {
-    return;
-  }, []);
+    const lastdata = qItems[qItems.length - 1];
+    if (lastdata.question || lastdata.answer || lastdata.explanation) {
+      setQItems([...qItems, { question: "", answer: "", explanation: "" }]);
+    }
+  }, [qItems]);
   return (
     <TableContainer>
       <Table variant="simple">
-        <TableCaption>Imperial to metric conversion factors</TableCaption>
         <Thead>
           <Tr>
             <Th>質問</Th>
