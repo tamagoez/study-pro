@@ -12,7 +12,9 @@ import {
 import { useEffect, useState } from "react";
 
 export function SectionEditTable({ sectionid }: { sectionid: string }) {
-  const [qItems, setQItems] = useState([]);
+  const [qItems, setQItems] = useState([
+    { question: "", answer: "", explanation: "" },
+  ]);
   useEffect(() => {
     const lastdata = qItems[qItems.length - 1];
     if (lastdata.question || lastdata.answer || lastdata.explanation) {
