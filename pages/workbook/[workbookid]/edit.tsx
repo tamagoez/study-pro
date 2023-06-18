@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { SectionCard } from "../../../components/workbook/section/card";
 import { fetchSections } from "../../../scripts/workbook/section/sections";
+import { FormControl, FormLabel, Switch } from "@chakra-ui/react";
 
 export default function WorkbookEdit() {
   const router = useRouter();
@@ -23,21 +24,20 @@ export default function WorkbookEdit() {
     fetchData();
   }, []);
 
+  // !! 仮で作った雑魚システム
+  const [editmode, setEditmode] = useState(false);
   return (
     <Layout titleprop="ワークブックを編集">
-      <p>閲覧モード</p>
-      {sectionItems.map((x) => (
-        <SectionCard
-          id={x.id}
-          title={x.title}
-          subtitle={x.subtitle}
-          url={x.url}
-          own={true}
-          subject={x.subject}
-          editmode={false}
+      <FormControl display="flex" alignItems="center">
+        <FormLabel htmlFor="edit-mode" mb="0">
+          {editmode ? "閲覧モード" : "編集モード"}
+        </FormLabel>
+        <Switch
+          id="edit-mode"
+          checked={editmode}
+          onChange={(e) => setEditmode(e.target.checked)}
         />
-      ))}
-      <p>編集モード</p>
+      </FormControl>
       {sectionItems.map((x) => (
         <SectionCard
           id={x.id}
@@ -46,7 +46,7 @@ export default function WorkbookEdit() {
           url={x.url}
           own={true}
           subject={x.subject}
-          editmode={true}
+          editmode={editmode}
         />
       ))}
     </Layout>
