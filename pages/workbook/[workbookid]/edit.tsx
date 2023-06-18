@@ -8,7 +8,10 @@ export default function WorkbookEdit() {
   const router = useRouter();
   const { workbookid } = router.query;
 
-  const [workbookId, setWorkbookId] = useState(workbookid[0]);
+  const [workbookId, setWorkbookId] = useState("");
+  if (typeof workbookid === "string") {
+    setWorkbookId(workbookid);
+  }
   const [loading, setLoading] = useState(true);
   const [sectionItems, setSectionItems] = useState([]);
   useEffect(() => {
