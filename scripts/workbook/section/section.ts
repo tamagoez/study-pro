@@ -13,7 +13,7 @@ export async function createSection(
   const url = Date.now();
   const userid = await getUserid();
   const { data, error } = await supabase
-    .from("workbooks")
+    .from("sections")
     .insert({
       title: title,
       subtitle: subtitle,
