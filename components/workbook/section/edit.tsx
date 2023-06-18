@@ -8,6 +8,7 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Input,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -34,9 +35,9 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
         <Tbody>
           {qItems.map((x) => (
             <Tr>
-              <Td>{x.question}</Td>
-              <Td>{x.answer}</Td>
-              <Td>{x.explanation}</Td>
+              <Input value={x.question} />
+              <Input value={x.answer} />
+              <Input value={x.explanation} />
             </Tr>
           ))}
         </Tbody>
