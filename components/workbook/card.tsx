@@ -19,7 +19,7 @@ export function WorkbookCard({
   return (
     <Box
       maxW="sm"
-      borderWidth="1px"
+      borderWidth="2px"
       borderRadius="lg"
       overflow="hidden"
       as={NextLink}
