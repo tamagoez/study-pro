@@ -6,9 +6,9 @@ import { SectionEditTable } from "../../../../components/workbook/section/edit";
 export default function WorkbookSectionEdit() {
   const router = useRouter();
   const { sectionid } = router.query;
-  const [sectionId, setSectionId] = useState("");
+  let sectionId;
   if (typeof sectionid === "string") {
-    setSectionId(sectionid);
+    sectionId = sectionid;
   }
 
   
