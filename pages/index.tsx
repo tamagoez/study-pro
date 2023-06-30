@@ -1,22 +1,18 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
-
-import { Typography, Divider } from "antd";
-const { Title } = Typography;
+import { Divider, Text } from "@chakra-ui/react";
 
 const APP_TITLE = "StudySharp";
 
 const IndexPage = () => (
   <Layout titleprop="トップページ">
-    <Title style={{ marginBottom: 0 }}>{APP_TITLE}</Title>
-    <Title level={4} style={{ margin: 0 }}>
+    <Text style={{ marginBottom: 0 }}>{APP_TITLE}</Text>
+    <Text size={"md"} style={{ margin: 0 }}>
       勉強に燃えよう
-    </Title>
+    </Text>
     <Divider />
     <div>
-      <Title level={5}>
-        どのようなことができるようになる予定か
-      </Title>
+      <Text size={"md"}>どのようなことができるようになる予定か</Text>
       <ul>
         <li>Todoタスクを管理できます</li>
         <li>勉強時間を記録できます</li>

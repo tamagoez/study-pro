@@ -4,7 +4,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "trace": "node trace-to-tree.mjs .next/trace"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.7.0",
@@ -15,7 +16,7 @@
     "@supabase/auth-helpers-react": "^0.4.0",
     "@supabase/supabase-js": "^2.25.0",
     "@vercel/analytics": "^1.0.1",
-    "antd": "^5.6.1",
+    "event-stream": "^4.0.1",
     "framer-motion": "^10.12.16",
     "next": "latest",
     "next-pwa": "^5.6.0",

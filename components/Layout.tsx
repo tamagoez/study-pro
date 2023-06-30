@@ -6,7 +6,6 @@ import Head from "next/head";
 import { MdMenu } from "react-icons/md";
 // import { movePage } from "../scripts/action";
 import { useRouter } from "next/router";
-import { Divider, Menu, MenuProps, Col, Row } from "antd";
 import { useUser } from "@supabase/auth-helpers-react";
 
 // supabase
@@ -62,16 +61,7 @@ export default function Layout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <header>
-        <Row>
-          <Col span={8}>
-            <MenuComponent router={router} />
-          </Col>
-          <Col span={8}>
-            <p className="header_title">{title}</p>
-          </Col>
-        </Row>
-      </header>
+      <header>{title}</header>
       <main style={{ paddingTop: "40px" }}>{children}</main>
       {showfooter ? (
         <footer>
@@ -87,37 +77,3 @@ const menulist = [
   { title: "タスク", url: "todo", command: "⌘T" },
   { title: "時計", url: "clock", command: "⌘C" },
 ];
-
-// メモ
-// それぞれのUIの良さがあったため、アイコンボタンはChakra-UI、メニューはAnt Designを使う
-
-const guestMenuItems: MenuProps["items"] = [
-  {
-    label: <Link href="/login">ログイン</Link>,
-    key: "login",
-  },
-  {
-    label: <Link href="/signup">新規登録</Link>,
-    key: "signup",
-  },
-];
-
-const loginedMenuItems: MenuProps["items"] = [
-  {
-    label: <Link href="/logout">ログアウト</Link>,
-    key: "logout",
-  },
-];
-
-const MenuComponent = ({ router }: { router: any }) => {
-  const user = useUser();
-  const [current, setCurrent] = useState("");
-  return (
-    <Menu
-      selectedKeys={[current]}
-      mode="horizontal"
-      items={user ? loginedMenuItems : guestMenuItems}
-      style={{ background: "none", borderBottom: "none", height: "40px" }}
-    />
-  );
-};
