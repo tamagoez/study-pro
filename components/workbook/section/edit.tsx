@@ -109,9 +109,9 @@ function QuestionItem({
           type="text"
           value={question}
           onChange={(event) => handleChange(event, id, "question")}
-          width="auto"
+          width="100%"
           height="auto"
-          variant="unstyled"
+          variant="flushed"
         />
       </Td>
       <Td>
@@ -119,9 +119,9 @@ function QuestionItem({
           type="text"
           value={answer}
           onChange={(event) => handleChange(event, id, "answer")}
-          width="auto"
+          width="100%"
           height="auto"
-          variant="unstyled"
+          variant="flushed"
         />
       </Td>
       <Td>
@@ -129,9 +129,9 @@ function QuestionItem({
           type="text"
           value={explanation}
           onChange={(event) => handleChange(event, id, "explanation")}
-          width="auto"
+          width="100%"
           height="auto"
-          variant="unstyled"
+          variant="flushed"
         />
       </Td>
     </Tr>
