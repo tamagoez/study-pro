@@ -15,16 +15,31 @@ import { useEffect, useState } from "react";
 export function SectionEditTable({ sectionid }: { sectionid: string }) {
   // 設定可能変数
   const [tableViewSize, setTableViewSize] = useState<"sm" | "md" | "lg">("md");
+  let lastid = 1;
 
   const [qItems, setQItems] = useState([
-    { question: "", answer: "", explanation: "" },
+    { id: 1, question: "", answer: "", explanation: "" },
   ]);
   useEffect(() => {
     const lastdata = qItems[qItems.length - 1];
     if (lastdata.question || lastdata.answer || lastdata.explanation) {
-      setQItems([...qItems, { question: "", answer: "", explanation: "" }]);
+      lastid += 1;
+      setQItems([
+        ...qItems,
+        { id: lastid, question: "", answer: "", explanation: "" },
+      ]);
     }
   }, [qItems]);
+
+  const handleChange = (event, id, key) => {
+    const updatedData = qItems.map((item) => {
+      if (item.id === id) {
+        return { ...item, [key]: event.target.value };
+      }
+      return item;
+    });
+    setQItems(updatedData);
+  };
   return (
     <>
       <TableContainer>
@@ -39,9 +54,11 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
           <Tbody>
             {qItems.map((x) => (
               <QuestionItem
+                id={x.id}
                 question={x.question}
                 answer={x.answer}
                 explanation={x.explanation}
+                handleChange={(event, id, key) => handleChange(event, id, key)}
               />
             ))}
           </Tbody>
@@ -59,24 +76,40 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
 }
 
 function QuestionItem({
+  id,
   question,
   answer,
   explanation,
+  handleChange,
 }: {
+  id: number;
   question: string;
   answer: string;
   explanation: string;
+  handleChange: any;
 }) {
   return (
     <Tr>
       <Td>
-        <Input value={question} />
+        <Input
+          type="text"
+          value={question}
+          onChange={(event) => handleChange(event, id, "name")}
+        />
       </Td>
       <Td>
-        <Input value={answer} />
+        <Input
+          type="text"
+          value={answer}
+          onChange={(event) => handleChange(event, id, "answer")}
+        />
       </Td>
       <Td>
-        <Input value={explanation} />
+        <Input
+          type="text"
+          value={explanation}
+          onChange={(event) => handleChange(event, id, "explanation")}
+        />
       </Td>
     </Tr>
   );
