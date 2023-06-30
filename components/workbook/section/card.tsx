@@ -9,6 +9,7 @@ export function SectionCard({
   own,
   subject,
   editmode,
+  workbookid,
 }: {
   title: string;
   subtitle: string;
@@ -17,6 +18,7 @@ export function SectionCard({
   own: boolean;
   subject: number;
   editmode: boolean;
+  workbookid: number;
 }) {
   const urlargs = editmode ? "edit" : "";
   return (
@@ -26,7 +28,7 @@ export function SectionCard({
       borderRadius="lg"
       overflow="hidden"
       as={NextLink}
-      href={`${url}/${urlargs}`}
+      href={`/workbook/${workbookid}/${id}/${urlargs}`}
     >
       <Box p="6">
         <Box display="flex" alignItems="baseline">

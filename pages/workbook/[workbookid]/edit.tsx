@@ -20,7 +20,6 @@ export default function WorkbookEdit() {
       setSectionItems(await fetchSections(workbookId));
       setLoading(false);
     };
-
     fetchData();
   }, []);
 
@@ -47,6 +46,7 @@ export default function WorkbookEdit() {
           own={true}
           subject={x.subject}
           editmode={editmode}
+          workbookid={workbookId}
         />
       ))}
     </Layout>

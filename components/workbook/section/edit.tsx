@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 export function SectionEditTable({ sectionid }: { sectionid: string }) {
   // 設定可能変数
   const [tableViewSize, setTableViewSize] = useState<"sm" | "md" | "lg">("md");
-  let lastid = 1;
+  const [lastid, setLastid] = useState(1);
 
   const [qItems, setQItems] = useState([
     { id: 1, question: "", answer: "", explanation: "" },
@@ -23,7 +23,7 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
   useEffect(() => {
     const lastdata = qItems[qItems.length - 1];
     if (lastdata.question || lastdata.answer || lastdata.explanation) {
-      lastid += 1;
+      setLastid(lastid + 1);
       setQItems([
         ...qItems,
         { id: lastid, question: "", answer: "", explanation: "" },
@@ -94,7 +94,7 @@ function QuestionItem({
         <Input
           type="text"
           value={question}
-          onChange={(event) => handleChange(event, id, "name")}
+          onChange={(event) => handleChange(event, id, "question")}
         />
       </Td>
       <Td>
