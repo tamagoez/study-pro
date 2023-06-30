@@ -16,7 +16,9 @@ import { BsChevronDown } from "react-icons/bs";
 
 export function SectionEditTable({ sectionid }: { sectionid: string }) {
   // 設定可能変数
-  const [tableViewSize, setTableViewSize] = useState<"sm" | "md" | "lg" | string>("md");
+  const [tableViewSize, setTableViewSize] = useState<
+    "sm" | "md" | "lg" | string
+  >("md");
   const [lastid, setLastid] = useState(1);
 
   const [qItems, setQItems] = useState([
@@ -45,14 +47,14 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
   return (
     <>
       <Select
-        variant="unstyled"
+        size="sm"
         placeholder="表示サイズ"
         icon={<BsChevronDown />}
         onChange={(event) => setTableViewSize(event.target.value)}
       >
-        <option value="sm">sm</option>
-        <option value="md">md</option>
-        <option value="lg">lg</option>
+        <option value="sm">小</option>
+        <option value="md">中</option>
+        <option value="lg">大</option>
       </Select>
       <TableContainer>
         <Table size={tableViewSize} variant="simple">
@@ -107,6 +109,9 @@ function QuestionItem({
           type="text"
           value={question}
           onChange={(event) => handleChange(event, id, "question")}
+          width="auto"
+          height="auto"
+          variant="unstyled"
         />
       </Td>
       <Td>
@@ -114,6 +119,9 @@ function QuestionItem({
           type="text"
           value={answer}
           onChange={(event) => handleChange(event, id, "answer")}
+          width="auto"
+          height="auto"
+          variant="unstyled"
         />
       </Td>
       <Td>
@@ -121,6 +129,9 @@ function QuestionItem({
           type="text"
           value={explanation}
           onChange={(event) => handleChange(event, id, "explanation")}
+          width="auto"
+          height="auto"
+          variant="unstyled"
         />
       </Td>
     </Tr>
