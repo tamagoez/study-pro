@@ -29,7 +29,7 @@ export default function WorkbookEdit() {
     <Layout titleprop="ワークブックを編集">
       <FormControl display="flex" alignItems="center">
         <FormLabel htmlFor="edit-mode" mb="0">
-          {editmode ? "閲覧モード" : "編集モード"}
+          {!editmode ? "閲覧モード" : "編集モード"}
         </FormLabel>
         <Switch
           id="edit-mode"

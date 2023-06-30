@@ -9,16 +9,18 @@ import {
   TableCaption,
   TableContainer,
   Input,
+  Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { BsChevronDown } from "react-icons/bs";
 
 export function SectionEditTable({ sectionid }: { sectionid: string }) {
   // 設定可能変数
-  const [tableViewSize, setTableViewSize] = useState<"sm" | "md" | "lg">("md");
+  const [tableViewSize, setTableViewSize] = useState<"sm" | "md" | "lg" | string>("md");
   const [lastid, setLastid] = useState(1);
 
   const [qItems, setQItems] = useState([
-    { id: 1, question: "", answer: "", explanation: "" },
+    { id: 0, question: "", answer: "", explanation: "" },
   ]);
   useEffect(() => {
     const lastdata = qItems[qItems.length - 1];
@@ -42,6 +44,16 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
   };
   return (
     <>
+      <Select
+        variant="unstyled"
+        placeholder="表示サイズ"
+        icon={<BsChevronDown />}
+        onChange={(event) => setTableViewSize(event.target.value)}
+      >
+        <option value="sm">sm</option>
+        <option value="md">md</option>
+        <option value="lg">lg</option>
+      </Select>
       <TableContainer>
         <Table size={tableViewSize} variant="simple">
           <Thead>
