@@ -85,7 +85,7 @@ export function SectionEditTable({ sectionid }: { sectionid: number }) {
           <Tbody>
             {qItems.map((x) => (
               <QuestionItem
-                id={x.id}
+                id={x.internalid}
                 question={x.question}
                 answer={x.answer}
                 explanation={x.explanation}
