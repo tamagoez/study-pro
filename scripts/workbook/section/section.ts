@@ -65,9 +65,17 @@ export async function upsertQuestionFromSectionId(
   data.forEach(function (obj) {
     obj.sectionid = sectionid;
   });
-  let filteredArray = data.filter(function (obj) {
-    return dataInputed(obj);
+  let filteredArrayId = data.filter(function (obj) {
+    return dataInputed(obj) && obj.id;
   });
-  console.log(filteredArray);
-  const { error } = await supabase.from("questions").upsert(filteredArray);
+  let filteredArrayNoneId = data.filter(function (obj) {
+    return dataInputed(obj) && !obj.id;
+  });
+  console.log(filteredArrayId);
+  const { error: error1 } = await supabase
+    .from("questions")
+    .update(filteredArrayId);
+  const { error: error2 } = await supabase
+    .from("questions")
+    .insert(filteredArrayId);
 }
