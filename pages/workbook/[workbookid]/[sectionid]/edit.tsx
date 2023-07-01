@@ -7,11 +7,10 @@ export default function WorkbookSectionEdit() {
   const router = useRouter();
   const { sectionid } = router.query;
   let sectionId;
-  if (typeof sectionid === "string") {
+  if (typeof sectionid === "number") {
     sectionId = sectionid;
   }
 
-  
   return (
     <Layout titleprop="セクションを編集">
       <SectionEditTable sectionid={sectionId} />

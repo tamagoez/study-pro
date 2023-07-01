@@ -33,10 +33,35 @@ export async function createSection(
 
 export async function getSectionUniqueId(workbookid: string, url: string) {
   const { data, error } = await supabase
-    .from("questions")
+    .from("sections")
     .select("id")
     .eq("workbookid", workbookid)
     .eq("url", "url")
     .single();
   return data.id;
+}
+
+export async function getQuestionFromSectionId(
+  sectionid: number,
+  limit: number,
+  page: number
+) {
+  const rangeoffset = (page - 1) * limit;
+  const { data, error } = await supabase
+    .from("questions")
+    .select("question, answer, explanation, internalid")
+    .eq("sectionid", sectionid)
+    .range(rangeoffset, rangeoffset + 49);
+  return data;
+}
+
+export async function upsertQuestionFromSectionId(
+  sectionid: number,
+  data: any
+) {
+  data.forEach(function (obj) {
+    obj.sectionid = sectionid;
+  });
+
+  const { error } = await supabase.from("questions").upsert(data);
 }

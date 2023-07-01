@@ -10,27 +10,33 @@ import {
   TableContainer,
   Input,
   Select,
+  Button,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
+import {
+  getQuestionFromSectionId,
+  upsertQuestionFromSectionId,
+} from "../../../scripts/workbook/section/section";
 
-export function SectionEditTable({ sectionid }: { sectionid: string }) {
+export function SectionEditTable({ sectionid }: { sectionid: number }) {
   // 設定可能変数
   const [tableViewSize, setTableViewSize] = useState<
     "sm" | "md" | "lg" | string
   >("md");
   const [lastid, setLastid] = useState(1);
 
-  const [qItems, setQItems] = useState([
-    { id: 0, question: "", answer: "", explanation: "" },
-  ]);
+  // 内部的設定可能変数
+  const [loading, setLoading] = useState(false);
+
+  const [qItems, setQItems] = useState([]);
   useEffect(() => {
     const lastdata = qItems[qItems.length - 1];
     if (lastdata.question || lastdata.answer || lastdata.explanation) {
       setLastid(lastid + 1);
       setQItems([
         ...qItems,
-        { id: lastid, question: "", answer: "", explanation: "" },
+        { internalid: lastid, question: "", answer: "", explanation: "" },
       ]);
     }
   }, [qItems]);
@@ -44,6 +50,17 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
     });
     setQItems(updatedData);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await getQuestionFromSectionId(sectionid, 50, 1);
+      setQItems(data);
+      setLastid(data.length + 1);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <Select
@@ -85,6 +102,12 @@ export function SectionEditTable({ sectionid }: { sectionid: string }) {
           </Tfoot>
         </Table>
       </TableContainer>
+      <Button
+        colorScheme="teal"
+        onClick={() => upsertQuestionFromSectionId(sectionid, qItems)}
+      >
+        保存する
+      </Button>
     </>
   );
 }
