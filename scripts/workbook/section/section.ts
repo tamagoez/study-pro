@@ -72,10 +72,20 @@ export async function upsertQuestionFromSectionId(
     return dataInputed(obj) && !obj.id;
   });
   console.log(filteredArrayId);
-  const { error: error1 } = await supabase
+  const { data: data1, error: error1 } = await supabase
     .from("questions")
-    .upsert(filteredArrayId);
-  const { error: error2 } = await supabase
+    .upsert(filteredArrayId)
+    .select();
+  const { data: data2, error: error2 } = await supabase
     .from("questions")
-    .insert(filteredArrayNoneId);
+    .insert(filteredArrayNoneId)
+    .select();
+  return [...data1, ...data2];
+}
+
+export async function deleteQuestionFromId(id: number) {
+  // この関数を利用するときは必ず事前に確認画面を表示しておくこと
+
+  const { error } = await supabase.from("questions").delete().eq("id", id);
+  if (error) console.error;
 }

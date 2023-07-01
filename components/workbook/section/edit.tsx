@@ -11,6 +11,11 @@ import {
   Input,
   Select,
   Button,
+  Textarea,
+  IconButton,
+  Switch,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
@@ -18,6 +23,9 @@ import {
   getQuestionFromSectionId,
   upsertQuestionFromSectionId,
 } from "../../../scripts/workbook/section/section";
+import { toastSuccess } from "../../toast/toast";
+import { MdDeleteOutline } from "react-icons/md";
+import ResizeTextarea from "react-textarea-autosize";
 
 export function SectionEditTable({
   sectionid,
@@ -30,9 +38,12 @@ export function SectionEditTable({
     "sm" | "md" | "lg" | string
   >("md");
   const [lastid, setLastid] = useState(1);
+  const [autosave, setAutosave] = useState(true);
 
   // 内部的設定可能変数
   const [loading, setLoading] = useState(false);
+  const [skipAutosave, setSkipAutosave] = useState(true);
+  const [autosaveStatus, setAutosaveStatus] = useState(false);
 
   // 簡略化用定数
   const dataInputed = (data) =>
@@ -56,6 +67,16 @@ export function SectionEditTable({
         { internalid: lastid, question: "", answer: "", explanation: "" },
       ]);
     }
+    if (!autosaveStatus && autosave && !skipAutosave) {
+      setAutosaveStatus(true);
+      const timer = setTimeout(() => {
+        console.log("[NOTIFY] AutoSave");
+        saveTable(true);
+        setAutosaveStatus(false);
+      }, 10000);
+      return () => clearTimeout(timer);
+    }
+    setSkipAutosave(false);
   }, [qItems]);
 
   const handleChange = (event, id, key) => {
@@ -76,55 +97,75 @@ export function SectionEditTable({
       setLastid(data[data.length - 1].internalid + 1);
       setLoading(false);
       console.log(qItems);
+      setSkipAutosave(false);
     };
     fetchData();
   }, []);
+
+  async function saveTable(auto: boolean) {
+    const newdata = await upsertQuestionFromSectionId(sectionid, qItems);
+    setSkipAutosave(true);
+    setQItems(newdata);
+    toastSuccess(auto ? "自動保存されました" : "保存されました");
+  }
+
+  function deleteItem(internalid: number) {}
+
   return (
     <>
-      <Select
-        size="sm"
-        placeholder="表示サイズ"
-        icon={<BsChevronDown />}
-        onChange={(event) => setTableViewSize(event.target.value)}
-      >
-        <option value="sm">小</option>
-        <option value="md">中</option>
-        <option value="lg">大</option>
-      </Select>
+      <FormControl display="flex" alignItems="center">
+        <FormLabel htmlFor="edit-mode" mb="0">
+          自動保存
+        </FormLabel>
+        <Switch
+          id="autosave"
+          checked={autosave}
+          onChange={(e) => setAutosave(e.target.checked)}
+        />
+        <Select
+          size="sm"
+          placeholder="表示サイズ"
+          icon={<BsChevronDown />}
+          onChange={(event) => setTableViewSize(event.target.value)}
+        >
+          <option value="sm">小</option>
+          <option value="md">中</option>
+          <option value="lg">大</option>
+        </Select>
+      </FormControl>
       <TableContainer>
         <Table size={tableViewSize} variant="simple">
           <Thead>
             <Tr>
-              <Th>質問</Th>
+              <Th>質問 (改行可)</Th>
               <Th>解答</Th>
-              <Th>解説</Th>
+              <Th>解説 (改行可)</Th>
             </Tr>
           </Thead>
           <Tbody>
             {qItems.map((x) => (
               <QuestionItem
-                id={x.internalid}
+                id={x.id}
+                internalid={x.internalid}
                 question={x.question}
                 answer={x.answer}
                 explanation={x.explanation}
                 handleChange={(event, id, key) => handleChange(event, id, key)}
+                handleDelete={(internalid) => deleteItem(internalid)}
                 key={x.internalid}
               />
             ))}
           </Tbody>
           <Tfoot>
             <Tr>
-              <Th>質問</Th>
+              <Th>質問 (改行可)</Th>
               <Th>解答</Th>
-              <Th>解説</Th>
+              <Th>解説 (改行可)</Th>
             </Tr>
           </Tfoot>
         </Table>
       </TableContainer>
-      <Button
-        colorScheme="teal"
-        onClick={() => upsertQuestionFromSectionId(sectionid, qItems)}
-      >
+      <Button colorScheme="teal" onClick={() => saveTable(false)}>
         保存する
       </Button>
     </>
@@ -133,47 +174,65 @@ export function SectionEditTable({
 
 function QuestionItem({
   id,
+  internalid,
   question,
   answer,
   explanation,
   handleChange,
+  handleDelete,
 }: {
-  id: number;
+  id: number | null;
+  internalid: number;
   question: string;
   answer: string;
   explanation: string;
   handleChange: any;
+  handleDelete: any;
 }) {
   return (
     <Tr>
       <Td>
-        <Input
-          type="text"
+        <Textarea
           value={question}
-          onChange={(event) => handleChange(event, id, "question")}
+          onChange={(event) => handleChange(event, internalid, "question")}
           width="100%"
-          height="auto"
           variant="flushed"
+          resize="none"
+          minRows={1}
+          minH="unset"
+          overflow="hidden"
+          as={ResizeTextarea}
         />
       </Td>
       <Td>
         <Input
           type="text"
           value={answer}
-          onChange={(event) => handleChange(event, id, "answer")}
+          onChange={(event) => handleChange(event, internalid, "answer")}
           width="100%"
           height="auto"
           variant="flushed"
         />
       </Td>
       <Td>
-        <Input
-          type="text"
+        <Textarea
           value={explanation}
-          onChange={(event) => handleChange(event, id, "explanation")}
+          onChange={(event) => handleChange(event, internalid, "explanation")}
           width="100%"
-          height="auto"
           variant="flushed"
+          resize="none"
+          minRows={1}
+          minH="unset"
+          overflow="hidden"
+          as={ResizeTextarea}
+        />
+      </Td>
+      <Td>
+        <IconButton
+          aria-label="Delete this line"
+          variant="ghost"
+          icon={<MdDeleteOutline />}
+          onClick={() => handleDelete(internalid)}
         />
       </Td>
     </Tr>
