@@ -74,8 +74,8 @@ export async function upsertQuestionFromSectionId(
   console.log(filteredArrayId);
   const { error: error1 } = await supabase
     .from("questions")
-    .update(filteredArrayId);
+    .upsert(filteredArrayId);
   const { error: error2 } = await supabase
     .from("questions")
-    .insert(filteredArrayId);
+    .insert(filteredArrayNoneId);
 }
