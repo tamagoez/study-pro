@@ -19,7 +19,12 @@ import {
   upsertQuestionFromSectionId,
 } from "../../../scripts/workbook/section/section";
 
-export function SectionEditTable({ sectionid }: { sectionid: number }) {
+export function SectionEditTable({
+  sectionid,
+}: {
+  sectionid: number | undefined;
+}) {
+  if (sectionid === undefined) return;
   // 設定可能変数
   const [tableViewSize, setTableViewSize] = useState<
     "sm" | "md" | "lg" | string
@@ -29,10 +34,22 @@ export function SectionEditTable({ sectionid }: { sectionid: number }) {
   // 内部的設定可能変数
   const [loading, setLoading] = useState(false);
 
+  // 簡略化用定数
+  const dataInputed = (data) =>
+    data.question || data.answer || data.explanation;
+
   const [qItems, setQItems] = useState([]);
   useEffect(() => {
-    const lastdata = qItems[qItems.length - 1];
-    if (lastdata.question || lastdata.answer || lastdata.explanation) {
+    let matchfilter = false;
+    if (qItems.length == 0) {
+      matchfilter = true;
+    } else {
+      const lastdata = qItems[qItems.length - 1];
+      if (dataInputed(lastdata)) {
+        matchfilter = true;
+      }
+    }
+    if (matchfilter) {
       setLastid(lastid + 1);
       setQItems([
         ...qItems,
@@ -43,7 +60,7 @@ export function SectionEditTable({ sectionid }: { sectionid: number }) {
 
   const handleChange = (event, id, key) => {
     const updatedData = qItems.map((item) => {
-      if (item.id === id) {
+      if (item.internalid === id) {
         return { ...item, [key]: event.target.value };
       }
       return item;
@@ -56,8 +73,9 @@ export function SectionEditTable({ sectionid }: { sectionid: number }) {
       setLoading(true);
       const data = await getQuestionFromSectionId(sectionid, 50, 1);
       setQItems(data);
-      setLastid(data.length + 1);
+      setLastid(data[data.length - 1].internalid + 1);
       setLoading(false);
+      console.log(qItems);
     };
     fetchData();
   }, []);
@@ -90,6 +108,7 @@ export function SectionEditTable({ sectionid }: { sectionid: number }) {
                 answer={x.answer}
                 explanation={x.explanation}
                 handleChange={(event, id, key) => handleChange(event, id, key)}
+                key={x.internalid}
               />
             ))}
           </Tbody>

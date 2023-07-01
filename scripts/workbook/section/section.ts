@@ -52,6 +52,7 @@ export async function getQuestionFromSectionId(
     .select("question, answer, explanation, internalid")
     .eq("sectionid", sectionid)
     .range(rangeoffset, rangeoffset + 49);
+  if (error) console.error(error);
   return data;
 }
 
@@ -59,9 +60,14 @@ export async function upsertQuestionFromSectionId(
   sectionid: number,
   data: any
 ) {
+  const dataInputed = (data) =>
+    data.question || data.answer || data.explanation;
   data.forEach(function (obj) {
     obj.sectionid = sectionid;
   });
-
-  const { error } = await supabase.from("questions").upsert(data);
+  let filteredArray = data.filter(function (obj) {
+    return dataInputed(obj);
+  });
+  console.log(filteredArray);
+  const { error } = await supabase.from("questions").upsert(filteredArray);
 }

@@ -5,11 +5,16 @@ import { SectionEditTable } from "../../../../components/workbook/section/edit";
 
 export default function WorkbookSectionEdit() {
   const router = useRouter();
-  const { sectionid } = router.query;
-  let sectionId;
-  if (typeof sectionid === "number") {
-    sectionId = sectionid;
-  }
+  const [sectionId, setSectionId] = useState<number | undefined>(undefined);
+
+  // const { sectionid } = router.query;
+  // const sectionId = typeof sectionid === "string" ? parseInt(sectionid) : null;
+  useEffect(() => {
+    const url = location.pathname;
+    const segments = url.split("/");
+    setSectionId(parseInt(segments[3]));
+    console.log(segments);
+  });
 
   return (
     <Layout titleprop="セクションを編集">
