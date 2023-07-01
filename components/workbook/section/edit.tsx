@@ -272,19 +272,21 @@ function QuestionItem({
             <AlertDialogBody>
               この操作は取り消せません。
               <br />
-              問題: {question}<br />
-              解答: {answer}<br />
+              問題: {question}
+              <br />
+              解答: {answer}
+              <br />
               解説: {explanation}
             </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                Cancel
+                キャンセル
               </Button>
               <Button
                 colorScheme="red"
                 onClick={() => {
-                  onClose;
+                  onClose();
                   handleDelete(internalid);
                 }}
                 ml={3}
