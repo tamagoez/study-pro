@@ -49,7 +49,7 @@ export async function getQuestionFromSectionId(
   const rangeoffset = (page - 1) * limit;
   const { data, error } = await supabase
     .from("questions")
-    .select("question, answer, explanation, internalid")
+    .select("id, question, answer, explanation, internalid")
     .eq("sectionid", sectionid)
     .range(rangeoffset, rangeoffset + 49);
   if (error) console.error(error);
