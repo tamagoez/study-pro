@@ -16,10 +16,19 @@ import {
   Switch,
   FormControl,
   FormLabel,
+  useDisclosure,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import {
+  deleteQuestionFromId,
   getQuestionFromSectionId,
   upsertQuestionFromSectionId,
 } from "../../../scripts/workbook/section/section";
@@ -109,7 +118,15 @@ export function SectionEditTable({
     toastSuccess(auto ? "自動保存されました" : "保存されました");
   }
 
-  function deleteItem(internalid: number) {}
+  function deleteItem(internalid: number) {
+    const foundObjects = qItems.filter((obj) => obj.internalid === internalid);
+    const filteredArray = qItems.filter((obj) => obj.internalid !== internalid);
+    setQItems(filteredArray);
+    if (foundObjects[0].id) {
+      deleteQuestionFromId(foundObjects[0].id);
+    }
+    toastSuccess("削除しました");
+  }
 
   return (
     <>
@@ -151,7 +168,9 @@ export function SectionEditTable({
                 answer={x.answer}
                 explanation={x.explanation}
                 handleChange={(event, id, key) => handleChange(event, id, key)}
-                handleDelete={(internalid) => deleteItem(internalid)}
+                handleDelete={(internalid) => {
+                  deleteItem(internalid);
+                }}
                 key={x.internalid}
               />
             ))}
@@ -189,52 +208,93 @@ function QuestionItem({
   handleChange: any;
   handleDelete: any;
 }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
   return (
-    <Tr>
-      <Td>
-        <Textarea
-          value={question}
-          onChange={(event) => handleChange(event, internalid, "question")}
-          width="100%"
-          variant="flushed"
-          resize="none"
-          minRows={1}
-          minH="unset"
-          overflow="hidden"
-          as={ResizeTextarea}
-        />
-      </Td>
-      <Td>
-        <Input
-          type="text"
-          value={answer}
-          onChange={(event) => handleChange(event, internalid, "answer")}
-          width="100%"
-          height="auto"
-          variant="flushed"
-        />
-      </Td>
-      <Td>
-        <Textarea
-          value={explanation}
-          onChange={(event) => handleChange(event, internalid, "explanation")}
-          width="100%"
-          variant="flushed"
-          resize="none"
-          minRows={1}
-          minH="unset"
-          overflow="hidden"
-          as={ResizeTextarea}
-        />
-      </Td>
-      <Td>
-        <IconButton
-          aria-label="Delete this line"
-          variant="ghost"
-          icon={<MdDeleteOutline />}
-          onClick={() => handleDelete(internalid)}
-        />
-      </Td>
-    </Tr>
+    <>
+      <Tr>
+        <Td>
+          <Textarea
+            value={question}
+            onChange={(event) => handleChange(event, internalid, "question")}
+            width="100%"
+            variant="flushed"
+            resize="none"
+            minRows={1}
+            minH="unset"
+            overflow="hidden"
+            as={ResizeTextarea}
+          />
+        </Td>
+        <Td>
+          <Input
+            type="text"
+            value={answer}
+            onChange={(event) => handleChange(event, internalid, "answer")}
+            width="100%"
+            height="auto"
+            variant="flushed"
+          />
+        </Td>
+        <Td>
+          <Textarea
+            value={explanation}
+            onChange={(event) => handleChange(event, internalid, "explanation")}
+            width="100%"
+            variant="flushed"
+            resize="none"
+            minRows={1}
+            minH="unset"
+            overflow="hidden"
+            as={ResizeTextarea}
+          />
+        </Td>
+        <Td>
+          <IconButton
+            aria-label="Delete this line"
+            variant="ghost"
+            icon={<MdDeleteOutline />}
+            onClick={onOpen}
+          />
+        </Td>
+      </Tr>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              問題の削除
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              この操作は取り消せません。
+              <br />
+              問題: {question}<br />
+              解答: {answer}<br />
+              解説: {explanation}
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={() => {
+                  onClose;
+                  handleDelete(internalid);
+                }}
+                ml={3}
+              >
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </>
   );
 }
