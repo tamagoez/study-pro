@@ -90,8 +90,8 @@ export async function deleteQuestionFromId(id: number) {
   if (error) console.error;
 }
 
-export async function getAllQuestion(sectionid: number | null) {
-  if (sectionid === null) return;
+export async function getAllQuestion(sectionid: number | undefined) {
+  if (sectionid === undefined) return;
   const { data, error } = await supabase
     .from("questions")
     .select("internalid, question")
