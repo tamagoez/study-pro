@@ -100,7 +100,7 @@ export async function getAllQuestion(sectionid: number | undefined) {
   return data;
 }
 
-export async function markQuestion(sectionid: string, internalid: string) {
+export async function markQuestion(sectionid: number, internalid: number) {
   const { data, error } = await supabase
     .from("questions")
     .select("answer, explanation")
