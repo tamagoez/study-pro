@@ -15,7 +15,7 @@ export default function WorkbookEdit() {
   const [sectionItems, setSectionItems] = useState([]);
   useEffect(() => {
     const url = location.pathname;
-    setWorkbookId(splitUrl(url, 3));
+    setWorkbookId(splitUrl(url, 2));
     const fetchData = async () => {
       setSectionItems(await fetchSections(workbookId));
       setLoading(false);

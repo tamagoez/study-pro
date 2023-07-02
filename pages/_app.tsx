@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
 
 import "react-toastify/dist/ReactToastify.css";
+import { toastError, toastSuccess } from "../components/toast/toast";
 
 // import "../styles/cmdk.scss";
 
@@ -50,23 +51,45 @@ function MyApp({
     };
   }, [down]);
 
+  // useEffect(() => {
+  //   const handleRouteChange = (url, { shallow }) => {
+  //     console.log(
+  //       `App is changing to ${url} ${
+  //         shallow ? "with" : "without"
+  //       } shallow routing`
+  //     );
+  //   };
+
+  //   router.events.on("routeChangeStart", handleRouteChange);
+
+  //   // If the component is unmounted, unsubscribe
+  //   // from the event with the `off` method:
+  //   return () => {
+  //     router.events.off("routeChangeStart", handleRouteChange);
+  //   };
+  // }, [router]);
+
   useEffect(() => {
-    const handleRouteChange = (url, { shallow }) => {
-      console.log(
-        `App is changing to ${url} ${
-          shallow ? "with" : "without"
-        } shallow routing`
-      );
+    const handleNotificationResponse = async () => {
+      if ("Notification" in window && "serviceWorker" in navigator) {
+        const permission = await Notification.requestPermission();
+
+        if (permission === "granted") {
+          const registration = await navigator.serviceWorker.ready;
+          const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: process.env.NEXT_PUBLIC_SS_aServerKey,
+          });
+
+          toastSuccess("通知登録に成功しました!");
+        } else if (permission === "denied") {
+          toastError("通知登録に失敗しました");
+        }
+      }
     };
 
-    router.events.on("routeChangeStart", handleRouteChange);
-
-    // If the component is unmounted, unsubscribe
-    // from the event with the `off` method:
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChange);
-    };
-  }, [router]);
+    handleNotificationResponse();
+  }, []);
 
   return (
     <SessionContextProvider
