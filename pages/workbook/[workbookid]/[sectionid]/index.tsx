@@ -18,6 +18,7 @@ export default function WorkbookSectionTest() {
       const data = await getAllQuestion(sectionId);
       setQItems(shuffle(data));
     };
+    readyQuestions();
   }, []);
 
   return <>{qItems}</>;
