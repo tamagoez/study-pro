@@ -13,9 +13,10 @@ export default function WorkbookSectionTest() {
 
   useEffect(() => {
     const url = location.pathname;
-    setSectionId(splitUrl(url, 3));
+    const sId = splitUrl(url, 3);
+    setSectionId(sId);
     const readyQuestions = async () => {
-      const data = await getAllQuestion(sectionId);
+      const data = await getAllQuestion(sId);
       setQItems(shuffle(data));
     };
     readyQuestions();
