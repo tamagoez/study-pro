@@ -1,19 +1,19 @@
 import { Button, Container, Input, Select, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createSection } from "../../../scripts/workbook/section/section";
 import { useRouter } from "next/router";
 import Layout from "../../../components/Layout";
+import { splitUrl } from "../../../scripts/common/url";
 
 export default function SectionCreate() {
   const router = useRouter();
   const [sectionName, setSectionName] = useState("");
   const [sectionSubtitle, setSectionSubtitle] = useState("");
   const [sectionSubject, setSectionSubject] = useState<number>();
-  const { workbookid } = router.query;
-  let workbookId;
-  if (typeof workbookid === "string") {
-    workbookId = workbookid;
-  }
+  const [workbookId, setWorkbookId] = useState<number | null>(null);
+  useEffect(() => {
+    setWorkbookId(splitUrl(location.pathname, 2));
+  }, []);
 
   async function createSectionButton() {
     const returnid = await createSection(

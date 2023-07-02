@@ -20,5 +20,5 @@ export default function WorkbookSectionTest() {
     };
   }, []);
 
-  return <>{setQItems}</>;
+  return <>{qItems}</>;
 }

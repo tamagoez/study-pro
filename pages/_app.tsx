@@ -78,7 +78,8 @@ function MyApp({
           const registration = await navigator.serviceWorker.ready;
           const subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: process.env.NEXT_PUBLIC_SS_aServerKey,
+            applicationServerKey:
+              "BCXhVNGYilUH9PLT_h5wocF1KqZlZt2pb2sNtlF65156zs1_zsoIbtOMKLVUJPR7PzfDLDWUSCyjs8J4LwOIxP4",
           });
 
           toastSuccess("通知登録に成功しました!");

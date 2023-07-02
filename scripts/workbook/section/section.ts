@@ -6,9 +6,10 @@ const supabase = createPagesBrowserClient();
 export async function createSection(
   title: string,
   subtitle: string,
-  workbookid: string,
+  workbookid: number | null,
   subject: number
 ) {
+  if (workbookid === null) return;
   // !! 本当はurlはworkbook内での連番にしたかったが、製作時間がないため現在日時で仮に対応させる
   const url = Date.now();
   const userid = await getUserid();
