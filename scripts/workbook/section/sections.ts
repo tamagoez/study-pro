@@ -1,7 +1,7 @@
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 const supabase = createPagesBrowserClient();
 
-export async function fetchSections(workbookid: string) {
+export async function fetchSections(workbookid: number) {
   const user = (await supabase.auth.getUser()).data.user;
   const { data, error } = await supabase
     .from("sections")

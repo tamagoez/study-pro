@@ -291,7 +291,7 @@ function QuestionItem({
                 }}
                 ml={3}
               >
-                Delete
+                削除する
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>

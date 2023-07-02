@@ -4,18 +4,18 @@ import Layout from "../../../components/Layout";
 import { SectionCard } from "../../../components/workbook/section/card";
 import { fetchSections } from "../../../scripts/workbook/section/sections";
 import { FormControl, FormLabel, Switch } from "@chakra-ui/react";
+import { splitUrl } from "../../../scripts/common/url";
 
 export default function WorkbookEdit() {
   const router = useRouter();
-  const { workbookid } = router.query;
+  // router.queryがポンコツなのでuseEffectで疑似的に作る
+  const [workbookId, setWorkbookId] = useState<number | undefined>(undefined);
 
-  let workbookId;
-  if (typeof workbookid === "string") {
-    workbookId = workbookid;
-  }
   const [loading, setLoading] = useState(true);
   const [sectionItems, setSectionItems] = useState([]);
   useEffect(() => {
+    const url = location.pathname;
+    setWorkbookId(splitUrl(url, 3));
     const fetchData = async () => {
       setSectionItems(await fetchSections(workbookId));
       setLoading(false);

@@ -88,3 +88,23 @@ export async function deleteQuestionFromId(id: number) {
   const { error } = await supabase.from("questions").delete().eq("id", id);
   if (error) console.error;
 }
+
+export async function getAllQuestion(sectionid: number) {
+  const { data, error } = await supabase
+    .from("questions")
+    .select("internalid, question")
+    .eq("sectionid", sectionid);
+  if (error) console.error(error);
+  return data;
+}
+
+export async function markQuestion(sectionid: string, internalid: string) {
+  const { data, error } = await supabase
+    .from("questions")
+    .select("answer, explanation")
+    .eq("internalid", internalid)
+    .eq("sectionid", sectionid)
+    .single();
+  if (error) console.error(error);
+  return data;
+}
