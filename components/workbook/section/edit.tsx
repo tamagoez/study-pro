@@ -101,7 +101,7 @@ export function SectionEditTable({
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await getQuestionFromSectionId(sectionid, 50, 1);
+      const data = await getQuestionFromSectionId(sectionid, 500, 1);
       setQItems(data);
       setLastid(data[data.length - 1].internalid + 1);
       setLoading(false);
