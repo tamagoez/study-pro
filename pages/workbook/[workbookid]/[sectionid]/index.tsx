@@ -47,6 +47,7 @@ export default function WorkbookSectionTest() {
   }
 
   useEffect(() => {
+    if (nowIndex === -1) return;
 setNowQuestion(qItems[nowIndex])
 setNowAnswer("")
 setNowModeStatus(1)
