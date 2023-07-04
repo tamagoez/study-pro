@@ -10,14 +10,14 @@ const ReactCMDK = ({ open, setOpen }: { open: boolean; setOpen: any }) => {
   const filteredItems = filterItems(
     [
       {
-        heading: "Home",
-        id: "home",
+        heading: "Link",
+        id: "link",
         items: [
           {
-            id: "home",
-            children: "Home",
+            id: "dashboard",
+            children: "Dashboard",
             icon: "HomeIcon",
-            href: "#",
+            href: "/dashboard",
           },
           {
             id: "settings",

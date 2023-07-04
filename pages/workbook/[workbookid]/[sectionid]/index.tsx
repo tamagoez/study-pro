@@ -6,7 +6,14 @@ import {
   markQuestion,
 } from "../../../../scripts/workbook/section/section";
 import shuffle from "just-shuffle";
-import { Button, Container, Input, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 import Layout from "../../../../components/Layout";
 
 export default function WorkbookSectionTest() {
@@ -16,12 +23,13 @@ export default function WorkbookSectionTest() {
   // 変数
   const [qItems, setQItems] = useState([]);
   const [nowIndex, setNowIndex] = useState(-1);
-  const [nowIId, setNowNIId] = useState();
+  const [nowIId, setNowIId] = useState();
   const [nowQuestion, setNowQuestion] = useState("");
   const [nowAnswer, setNowAnswer] = useState("");
   const [nowExplanation, setNowExplanation] = useState("");
   const [nowModeStatus, setNowModeStatus] = useState(1);
-  const [nowRightAnswer, setNowRightAnswer] = useState("")
+  const [nowRightAnswer, setNowRightAnswer] = useState("");
+  const [nowCorrect, setNowCorrect] = useState(false);
 
   useEffect(() => {
     const url = location.pathname;
@@ -37,34 +45,54 @@ export default function WorkbookSectionTest() {
 
   async function checkAnswer() {
     const data = await markQuestion(sectionId, nowIId);
-    setNowRightAnswer(data.answer)
+    setNowCorrect(data.answer === nowAnswer);
+    setNowRightAnswer(data.answer);
     setNowExplanation(data.explanation);
+    setNowModeStatus(2);
   }
 
   function goNext() {
-    setNowIndex(nowIndex + 1)
-    setNowModeStatus(1)
+    setNowIndex(nowIndex + 1);
+    setNowModeStatus(1);
   }
 
   useEffect(() => {
     if (nowIndex === -1) return;
-setNowQuestion(qItems[nowIndex])
-setNowAnswer("")
-setNowModeStatus(1)
-setNowRightAnswer("")
-  }, [nowIndex])
-
+    setNowQuestion(qItems[nowIndex].question);
+    setNowIId(qItems[nowIndex].internalid);
+    setNowAnswer("");
+    setNowModeStatus(1);
+    setNowRightAnswer("");
+  }, [nowIndex]);
 
   return (
     <Layout titleprop={`問題: ${sectionId}`}>
       <Container centerContent width="0.7">
         <Text>{nowQuestion}</Text>
-        <Input
-          placeholder="解答を入力"
-          onChange={(e) => setNowAnswer(e.target.value)}
-        />
-        <Button disabled={nowModeStatus != 1} onClick={() => checkAnswer()}>確定</Button>
-        {nowModeStatus === 2 ? <>{nowRightAnswer}<br />{nowExplanation}<br /><Button onClick={() => goNext()}>次へ進む</Button></> : null}
+        <Flex>
+          <Input
+            placeholder="解答を入力"
+            value={nowAnswer}
+            onChange={(e) => setNowAnswer(e.target.value)}
+          />
+          <Button
+            isDisabled={nowModeStatus !== 1}
+            onClick={() => checkAnswer()}
+          >
+            確定
+          </Button>
+        </Flex>
+        {nowModeStatus === 2 ? (
+          <>
+            <Divider my={3} />
+            <Text>{nowCorrect ? "正解" : "間違い"}</Text>
+            <Text mt={2} as="b" fontSize="xl">
+              {nowRightAnswer}
+            </Text>
+            <Text mt={10}>{nowExplanation}</Text>
+            <Button onClick={() => goNext()}>次へ進む</Button>
+          </>
+        ) : null}
       </Container>
     </Layout>
   );
