@@ -39,7 +39,7 @@ export default function WorkbookEdit() {
         />
       </FormControl>
       <SectionCard
-        id="0"
+        id="create"
         title="新規作成"
         subtitle="新しいセクションを作成する"
         url="create"

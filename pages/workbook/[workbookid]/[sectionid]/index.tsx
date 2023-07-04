@@ -58,7 +58,10 @@ export default function WorkbookSectionTest() {
 
   useEffect(() => {
     if (nowIndex === -1) return;
-    if (nowIndex === qItems.length) router.back();
+    if (nowIndex === qItems.length) {
+      router.back();
+      return;
+    }
     setNowQuestion(qItems[nowIndex].question);
     setNowIId(qItems[nowIndex].internalid);
     setNowAnswer("");
