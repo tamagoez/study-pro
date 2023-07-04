@@ -23,13 +23,13 @@ export async function createSection(
       url,
       subject,
     })
-    .select("url")
+    .select("url, id")
     .single();
   if (error) {
     console.error(error);
     toastError(error.message);
   }
-  return data.url;
+  return data.id;
 }
 
 export async function getSectionUniqueId(workbookid: string, url: string) {

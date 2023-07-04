@@ -58,6 +58,7 @@ export default function WorkbookSectionTest() {
 
   useEffect(() => {
     if (nowIndex === -1) return;
+    if (nowIndex === qItems.length) router.back();
     setNowQuestion(qItems[nowIndex].question);
     setNowIId(qItems[nowIndex].internalid);
     setNowAnswer("");
@@ -89,8 +90,10 @@ export default function WorkbookSectionTest() {
             <Text mt={2} as="b" fontSize="xl">
               {nowRightAnswer}
             </Text>
-            <Text mt={10}>{nowExplanation}</Text>
-            <Button onClick={() => goNext()}>次へ進む</Button>
+            <Text mt={3}>{nowExplanation}</Text>
+            <Button mt={10} onClick={() => goNext()}>
+              次へ進む
+            </Button>
           </>
         ) : null}
       </Container>
