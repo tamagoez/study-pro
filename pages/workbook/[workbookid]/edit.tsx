@@ -38,6 +38,16 @@ export default function WorkbookEdit() {
           onChange={(e) => setEditmode(e.target.checked)}
         />
       </FormControl>
+      <SectionCard
+        id="0"
+        title="新規作成"
+        subtitle="新しいセクションを作成する"
+        url="create"
+        own={false}
+        subject={0}
+        editmode={false}
+        workbookid={workbookId}
+      />
       {sectionItems.map((x) => (
         <SectionCard
           id={x.id}

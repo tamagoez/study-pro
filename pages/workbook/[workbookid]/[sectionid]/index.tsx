@@ -90,8 +90,8 @@ export default function WorkbookSectionTest() {
             <Text mt={2} as="b" fontSize="xl">
               {nowRightAnswer}
             </Text>
-            <Text mt={3}>{nowExplanation}</Text>
-            <Button mt={10} onClick={() => goNext()}>
+            <Text mt={5}>{nowExplanation}</Text>
+            <Button mt={7} onClick={() => goNext()}>
               次へ進む
             </Button>
           </>
