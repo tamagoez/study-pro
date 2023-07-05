@@ -67,6 +67,7 @@ export default function WorkbookSectionTest() {
     setNowAnswer("");
     setNowModeStatus(1);
     setNowRightAnswer("");
+    (document.getElementById("AnswerInput") as HTMLInputElement).focus();
   }, [nowIndex]);
 
   return (
@@ -75,6 +76,7 @@ export default function WorkbookSectionTest() {
         <Text>{nowQuestion}</Text>
         <Flex>
           <Input
+            id="AnswerInput"
             placeholder="解答を入力"
             value={nowAnswer}
             onChange={(e) => setNowAnswer(e.target.value)}
