@@ -29,7 +29,7 @@ export default function SectionEdit() {
   // !! 仮で作った雑魚システム
   const [editmode, setEditmode] = useState(false);
   return (
-    <Layout titleprop="ページを編集">
+    <Layout titleprop="セクションを編集">
       <FormControl display="flex" alignItems="center">
         <FormLabel htmlFor="edit-mode" mb="0">
           {!editmode ? "閲覧モード" : "編集モード"}
@@ -43,7 +43,7 @@ export default function SectionEdit() {
       <PageCard
         id="create"
         title="新規作成"
-        subtitle="新しいセクションを作成する"
+        subtitle="新しいページを作成する"
         url="create"
         own={false}
         subject={0}

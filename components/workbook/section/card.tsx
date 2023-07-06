@@ -20,7 +20,7 @@ export function SectionCard({
   editmode: boolean;
   workbookid: number;
 }) {
-  const urlargs = editmode ? "edit" : "edit";
+  const urlargs = editmode ? "edit" : "";
   return (
     <Box
       maxW="sm"

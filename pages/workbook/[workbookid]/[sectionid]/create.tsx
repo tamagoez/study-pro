@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Layout from "../../../../components/Layout";
 import { splitUrl } from "../../../../scripts/common/url";
 
-export default function SectionCreate() {
+export default function PageCreate() {
   const router = useRouter();
   const [pageName, setPageName] = useState("");
   const [pageSubtitle, setPageSubtitle] = useState("");
@@ -16,12 +16,12 @@ export default function SectionCreate() {
     setSectionId(splitUrl(location.pathname, 2));
   }, []);
 
-  async function createSectionButton() {
+  async function createPageButton() {
     const returnid = await createPage(pageName, pageSubtitle, sectionId);
     router.replace(`/workbook/${workbookId}/${sectionId}/${returnid}/edit`);
   }
   return (
-    <Layout titleprop="ワークブックを作成">
+    <Layout titleprop="ページを作成">
       <Container centerContent width="0.7">
         <Text>セクション名</Text>
         <Input onChange={(e) => setPageName(e.target.value)}></Input>
@@ -29,7 +29,7 @@ export default function SectionCreate() {
         <Input onChange={(e) => setPageSubtitle(e.target.value)}></Input>
         <Button
           disabled={!pageName || !pageSubtitle}
-          onClick={() => createSectionButton()}
+          onClick={() => createPageButton()}
         >
           作成する
         </Button>
