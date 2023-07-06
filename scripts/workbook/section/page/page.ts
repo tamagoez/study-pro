@@ -19,7 +19,6 @@ export async function createPage(
       subtitle: subtitle,
       ownerid: userid,
       sectionid,
-      url,
     })
     .select("url, id")
     .single();
