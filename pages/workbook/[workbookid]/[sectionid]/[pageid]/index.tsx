@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { splitUrl } from "../../../../scripts/common/url";
+import { splitUrl } from "../../../../../scripts/common/url";
 import {
   getAllQuestion,
   markQuestion,
-} from "../../../../scripts/workbook/section/section";
+} from "../../../../../scripts/workbook/section/page/page";
 import shuffle from "just-shuffle";
 import {
   Button,
@@ -14,11 +14,11 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import Layout from "../../../../components/Layout";
+import Layout from "../../../../../components/Layout";
 
-export default function WorkbookSectionTest() {
+export default function WorkbookPage() {
   const router = useRouter();
-  const [sectionId, setSectionId] = useState<number | undefined>(undefined);
+  const [pageId, setPageId] = useState<number | undefined>(undefined);
 
   // 変数
   const [qItems, setQItems] = useState([]);
@@ -33,8 +33,8 @@ export default function WorkbookSectionTest() {
 
   useEffect(() => {
     const url = location.pathname;
-    const sId = splitUrl(url, 3);
-    setSectionId(sId);
+    const sId = splitUrl(url, 4);
+    setPageId(sId);
     const readyQuestions = async () => {
       const data = await getAllQuestion(sId);
       setQItems(shuffle(data));
@@ -44,7 +44,7 @@ export default function WorkbookSectionTest() {
   }, []);
 
   async function checkAnswer() {
-    const data = await markQuestion(sectionId, nowIId);
+    const data = await markQuestion(pageId, nowIId);
     setNowCorrect(data.answer === nowAnswer);
     setNowRightAnswer(data.answer);
     setNowExplanation(data.explanation);
@@ -71,7 +71,7 @@ export default function WorkbookSectionTest() {
   }, [nowIndex]);
 
   return (
-    <Layout titleprop={`問題: ${sectionId}`}>
+    <Layout titleprop={`問題: ${pageId}`}>
       <Container centerContent width="0.7">
         <Text>{nowQuestion}</Text>
         <Flex>

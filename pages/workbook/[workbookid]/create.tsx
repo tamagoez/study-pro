@@ -1,6 +1,6 @@
 import { Button, Container, Input, Select, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { createSection } from "../../../scripts/workbook/section/section";
+import { createSection } from "../../../scripts/workbook/section/page/page";
 import { useRouter } from "next/router";
 import Layout from "../../../components/Layout";
 import { splitUrl } from "../../../scripts/common/url";

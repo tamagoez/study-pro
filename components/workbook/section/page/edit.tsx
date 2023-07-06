@@ -29,19 +29,15 @@ import { useEffect, useRef, useState } from "react";
 import { BsChevronDown } from "react-icons/bs";
 import {
   deleteQuestionFromId,
-  getQuestionFromSectionId,
-  upsertQuestionFromSectionId,
-} from "../../../scripts/workbook/section/section";
-import { toastSuccess } from "../../toast/toast";
+  getQuestionFromPageId,
+  upsertQuestionFromPageId,
+} from "../../../../scripts/workbook/section/page/page";
+import { toastSuccess } from "../../../toast/toast";
 import { MdDeleteOutline } from "react-icons/md";
 import ResizeTextarea from "react-textarea-autosize";
 
-export function SectionEditTable({
-  sectionid,
-}: {
-  sectionid: number | undefined;
-}) {
-  if (sectionid === undefined) return;
+export function PageEditTable({ pageid }: { pageid: number | undefined }) {
+  if (pageid === undefined) return;
   // 設定可能変数
   const [tableViewSize, setTableViewSize] = useState<
     "sm" | "md" | "lg" | string
@@ -101,7 +97,7 @@ export function SectionEditTable({
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const data = await getQuestionFromSectionId(sectionid, 500, 1);
+      const data = await getQuestionFromPageId(pageid, 500, 1);
       setQItems(data);
       setLastid(data[data.length - 1].internalid + 1);
       setLoading(false);
@@ -112,7 +108,7 @@ export function SectionEditTable({
   }, []);
 
   async function saveTable(auto: boolean) {
-    const newdata = await upsertQuestionFromSectionId(sectionid, qItems);
+    const newdata = await upsertQuestionFromPageId(pageid, qItems);
     setSkipAutosave(true);
     setQItems(newdata);
     toastSuccess(auto ? "自動保存されました" : "保存されました");

@@ -30,7 +30,8 @@ export async function middleware(request: NextRequest) {
     startsWith("/_next") ||
     startsWith("/api") ||
     startsWith("/workbox-") ||
-    startsWith("icon-")
+    startsWith("icon-") ||
+    startsWith("/news")
   ) {
     return res;
   }
