@@ -20,7 +20,7 @@ export async function createPage(
       ownerid: userid,
       sectionid,
     })
-    .select("url, id")
+    .select("id")
     .single();
   if (error) {
     console.error(error);
