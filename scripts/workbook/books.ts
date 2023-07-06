@@ -4,7 +4,7 @@ const supabase = createPagesBrowserClient();
 export async function fetchMyWorkbooks() {
   const user = (await supabase.auth.getUser()).data.user;
   const { data, error } = await supabase
-    .from("wb_workbooks")
+    .from("wb_books")
     .select("id, ownerid, title, subtitle, subject")
     .eq("ownerid", user.id);
   if (error) {

@@ -1,6 +1,6 @@
 import { Button, Container, Input, Select, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { createSection } from "../../../scripts/workbook/section/page/page";
+import { createSection } from "../../../scripts/workbook/section/section";
 import { useRouter } from "next/router";
 import Layout from "../../../components/Layout";
 import { splitUrl } from "../../../scripts/common/url";
@@ -25,7 +25,7 @@ export default function SectionCreate() {
     router.replace(`/workbook/${workbookId}/${returnid}/edit`);
   }
   return (
-    <Layout titleprop="ワークブックを作成">
+    <Layout titleprop="セクションを作成">
       <Container centerContent width="0.7">
         <Text>セクション名</Text>
         <Input onChange={(e) => setSectionName(e.target.value)}></Input>

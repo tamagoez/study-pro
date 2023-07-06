@@ -6,8 +6,7 @@ const supabase = createPagesBrowserClient();
 export async function createPage(
   title: string,
   subtitle: string,
-  sectionid: number | null,
-  subject: number
+  sectionid: number | null
 ) {
   if (sectionid === null) return;
   // !! 本当はurlはworkbook内での連番にしたかったが、製作時間がないため現在日時で仮に対応させる
@@ -21,7 +20,6 @@ export async function createPage(
       ownerid: userid,
       sectionid,
       url,
-      subject,
     })
     .select("url, id")
     .single();
@@ -102,7 +100,7 @@ export async function markQuestion(pageid: number, internalid: number) {
     .from("wb_questions")
     .select("answer, explanation")
     .eq("internalid", internalid)
-    .eq("sectionid", pageid)
+    .eq("pageid", pageid)
     .single();
   if (error) console.error(error);
   return data;

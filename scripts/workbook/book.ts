@@ -6,7 +6,7 @@ const supabase = createPagesBrowserClient();
 export async function createWorkbook(title: string, subtitle: string) {
   const userid = await getUserid();
   const { data, error } = await supabase
-    .from("wb_workbooks")
+    .from("wb_books")
     .insert({ title: title, subtitle: subtitle, ownerid: userid })
     .select("id")
     .single();

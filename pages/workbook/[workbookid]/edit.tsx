@@ -25,19 +25,9 @@ export default function WorkbookEdit() {
   }, []);
 
   // !! 仮で作った雑魚システム
-  const [editmode, setEditmode] = useState(false);
+  const [editmode, setEditmode] = useState(true);
   return (
     <Layout titleprop="ワークブックを編集">
-      <FormControl display="flex" alignItems="center">
-        <FormLabel htmlFor="edit-mode" mb="0">
-          {!editmode ? "閲覧モード" : "編集モード"}
-        </FormLabel>
-        <Switch
-          id="edit-mode"
-          checked={editmode}
-          onChange={(e) => setEditmode(e.target.checked)}
-        />
-      </FormControl>
       <SectionCard
         id="create"
         title="新規作成"

@@ -6,7 +6,7 @@ export async function fetchPages(sectionid: number | undefined) {
   const user = (await supabase.auth.getUser()).data.user;
   const { data, error } = await supabase
     .from("wb_pages")
-    .select("id, url, sectionid, ownerid, title, subtitle")
+    .select("id, sectionid, ownerid, title, subtitle")
     .eq("sectionid", sectionid);
   if (error) {
     console.log(error);
