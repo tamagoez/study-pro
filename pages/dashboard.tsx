@@ -13,6 +13,11 @@ const menuItem: DashboardItem[] = [
     description: "自分やその他のユーザーが作った問題集で学習しよう",
     url: "/workbook",
   },
+  {
+    title: "ニュース",
+    description: "アップデート情報や機能変更のお知らせ等",
+    url: "/news",
+  },
 ];
 
 export default function Dashboard() {

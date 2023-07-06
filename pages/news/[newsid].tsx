@@ -4,6 +4,7 @@ import { Text, Heading } from "@chakra-ui/react";
 import { splitUrl } from "../../scripts/common/url";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import { fetchNewsContent } from "../../scripts/news/page";
 
 export default function NewsIndex() {
@@ -18,18 +19,22 @@ export default function NewsIndex() {
       const nId = splitUrl(url, 2);
       setNewsId(nId);
       const data = await fetchNewsContent(nId);
-        setNewsTitle(data.title);
-        setNewsContent(data.content);
-        setNewsCreatedAt(data.created_at)
+      setNewsTitle(data.title);
+      setNewsContent(data.content);
+      setNewsCreatedAt(data.created_at);
       setLoading(false);
     };
     fetchNews();
   }, []);
   return (
     <Layout titleprop={`ニュース: ${newsTitle}`}>
-      <Heading>{newsTitle}</Heading>
+      {loading ? <Heading fontSize="md">読み込み中...</Heading> : null}
+      <Heading fontSize="md">{newsTitle}</Heading>
       <Text>{newsCreatedAt}</Text>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{newsContent}</ReactMarkdown>
+      <br />
+      <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+        {newsContent}
+      </ReactMarkdown>
     </Layout>
   );
 }

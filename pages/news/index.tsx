@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { fetchNewsList } from "../../scripts/news";
 import { NewsCard } from "../../components/news/card";
+import { Heading } from "@chakra-ui/react";
 
 export default function NewsIndex() {
   const [newsItem, setNewsItem] = useState([]);
@@ -16,6 +17,7 @@ export default function NewsIndex() {
   }, []);
   return (
     <Layout titleprop="ニュース">
+      <Heading fontSize="md">{loading ? "読み込み中..." : "ニュース"}</Heading>
       {newsItem.map((x) => (
         <NewsCard
           title={x.title}
