@@ -13,7 +13,8 @@ export default function PageCreate() {
   const [workbookId, setWorkbookId] = useState<number | null>(null);
   const [sectionId, setSectionId] = useState<number | null>(null);
   useEffect(() => {
-    setSectionId(splitUrl(location.pathname, 2));
+    setSectionId(splitUrl(location.pathname, 3));
+    setWorkbookId(splitUrl(location.pathname, 2))
   }, []);
 
   async function createPageButton() {
