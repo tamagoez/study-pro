@@ -82,7 +82,7 @@ function MyApp({
               "BCXhVNGYilUH9PLT_h5wocF1KqZlZt2pb2sNtlF65156zs1_zsoIbtOMKLVUJPR7PzfDLDWUSCyjs8J4LwOIxP4",
           });
 
-          toastSuccess("通知登録に成功しました!");
+          // toastSuccess("通知登録に成功しました!");
         } else if (permission === "denied") {
           toastError("通知登録に失敗しました");
         }
