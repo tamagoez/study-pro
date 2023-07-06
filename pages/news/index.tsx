@@ -17,7 +17,7 @@ export default function NewsIndex() {
   }, []);
   return (
     <Layout titleprop="ニュース">
-      <Heading fontSize="md">{loading ? "読み込み中..." : "ニュース"}</Heading>
+      <Heading fontSize="lg">{loading ? "読み込み中..." : "ニュース"}</Heading>
       {newsItem.map((x) => (
         <NewsCard
           title={x.title}

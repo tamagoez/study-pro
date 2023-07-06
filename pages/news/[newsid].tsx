@@ -28,7 +28,7 @@ export default function NewsIndex() {
   }, []);
   return (
     <Layout titleprop={`ニュース: ${newsTitle}`}>
-      {loading ? <Heading fontSize="md">読み込み中...</Heading> : null}
+      {loading ? <Heading fontSize="lg">読み込み中...</Heading> : null}
       <Heading fontSize="md">{newsTitle}</Heading>
       <Text>{newsCreatedAt}</Text>
       <br />
