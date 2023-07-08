@@ -41,8 +41,9 @@ async function emailSignup(email: string, password: string) {
   if (error) {
     console.error(error);
     toastError(error.message);
+  } else {
+    toastSuccess("メールを確認してください");
   }
-  toastSuccess("メールを確認してください");
 }
 
 export async function signOut() {

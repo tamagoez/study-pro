@@ -25,11 +25,8 @@ export default function Auth() {
   useEffect(() => {
     // URL変数を確認する
     const params = new URLSearchParams(location.search);
-    // const initmode = params.get("initmode");
-    const initmoveto = params.get("moveto");
-    // if (initmode == ("login" || "signup")) setAuthtype(initmode);
-    // console.log(initmode);
-    // if (initmoveto) setMoveTo(initmoveto);
+    const paramMoveto = params.get("moveto");
+    setMoveTo(paramMoveto);
   }, [router]);
 
   useEffect(() => {
@@ -57,7 +54,6 @@ export default function Auth() {
   }
 
   // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える
-  // const [form] = Form.useForm();
   return (
     <>
       <Layout

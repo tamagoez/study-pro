@@ -56,5 +56,8 @@ export async function middleware(request: NextRequest) {
   if (eqTo("/") && userid) {
     return NextResponse.rewrite(new URL("/dashboard", request.url));
   }
+  if (eqTo("/pwa") && userid) {
+    return NextResponse.rewrite(new URL("/dashboard", request.url));
+  }
   return res;
 }

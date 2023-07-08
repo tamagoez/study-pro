@@ -9,6 +9,11 @@ interface DashboardItem {
 
 const menuItem: DashboardItem[] = [
   {
+    title: "勉強時計",
+    description: "勉強した時間・遊んだ時間を記録して、モチベーションにつなげよう",
+    url: "/clock",
+  },
+  {
     title: "ワークブック",
     description: "自分やその他のユーザーが作った問題集で学習しよう",
     url: "/workbook",
