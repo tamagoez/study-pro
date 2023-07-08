@@ -13,6 +13,7 @@ export async function getMustDoneTasks() {
   if (error) {
     console.error(error);
     toastError(error.message);
+    return [];
   }
   return data;
 }
@@ -28,6 +29,7 @@ export async function getTodayTasks() {
   if (error) {
     console.error(error);
     toastError(error.message);
+    return [];
   }
   return data;
 }
