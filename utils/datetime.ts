@@ -11,3 +11,10 @@ export function calcDateToNumber(date: string) {
   const dt = DateTime.fromISO(date);
   return dt.toFormat("yyyyLLdd");
 }
+
+export function calcMinutesToDHM(inputMinutes: number) {
+  // 分を時間と分に変換
+  const hours = Math.floor(inputMinutes / 60);
+  const minutes = inputMinutes % 60;
+  return { hours, minutes };
+}

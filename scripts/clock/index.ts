@@ -33,3 +33,18 @@ export async function getTodayTasks() {
   }
   return data;
 }
+
+export async function getNowClock() {
+  const userid = await getUserid();
+  const { data, error } = await supabase
+    .from("cl_clock")
+    .select("studymin, breakmin")
+    .eq("userid", userid)
+    .single();
+  if (error) {
+    console.error(error);
+    toastError(error.message);
+    return;
+  }
+  return data;
+}
