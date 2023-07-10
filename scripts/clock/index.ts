@@ -43,8 +43,21 @@ export async function getNowClock() {
     .single();
   if (error) {
     console.error(error);
-    toastError(error.message);
-    return;
+    if (error.code === "PGRST116") {
+      const { data: dataInsert, error: errorInsert } = await supabase
+        .from("cl_clock")
+        .insert({ userid })
+        .select()
+        .single();
+      if (errorInsert) {
+        console.error(error);
+        toastError(error.message);
+      }
+      return dataInsert;
+    } else {
+      toastError(error.message);
+      return;
+    }
   }
   return data;
 }

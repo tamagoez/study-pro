@@ -22,8 +22,16 @@ export default function ClockIndex() {
   }, []);
   return (
     <Layout titleprop="勉強時計">
-      <Container centerContent width={0.8} backgroundColor="gray" padding="50">
-        <Text>
+      <Container
+        centerContent
+        width={0.8}
+        boxShadow="md"
+        rounded="md"
+        borderColor="gray"
+        padding="50"
+        borderWidth={2}
+      >
+        <Text textAlign="center" fontSize="lg">
           {nowH}h {nowM}m
         </Text>
       </Container>
