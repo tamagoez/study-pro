@@ -4,12 +4,14 @@ import { toastError } from "../../components/toast/toast";
 import { calcTodayNumber } from "../../utils/datetime";
 const supabase = createPagesBrowserClient();
 
-export async function getMustDoneTasks() {
+export async function getIncompleteAndTodayTasks() {
   const userid = await getUserid();
+  const today = calcTodayNumber(5);
   const { data, error } = await supabase
     .from("cl_tasks")
     .select("id, status, name, date, taketime")
-    .eq("userid", userid);
+    .eq("userid", userid)
+    .lte("date", today);
   if (error) {
     console.error(error);
     toastError(error.message);

@@ -9,8 +9,9 @@ import { zeroPad } from "../../utils/number";
 export default function ClockIndex() {
   const [nowH, setNowH] = useState("00");
   const [nowM, setNowM] = useState("00");
+  const [tasks, setTasks] = useState([])
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchClock = async () => {
       const data = await getNowClock();
       const splitTime = calcMinutesToDHM(data.studymin);
       const splitHours = zeroPad(splitTime.hours, 2);
@@ -18,7 +19,7 @@ export default function ClockIndex() {
       setNowH(splitHours);
       setNowM(splitMinutes);
     };
-    fetchData();
+    fetchClock();
   }, []);
   return (
     <Layout titleprop="勉強時計">
@@ -27,11 +28,13 @@ export default function ClockIndex() {
         width={0.8}
         boxShadow="md"
         rounded="md"
-        borderColor="gray"
+        borderColor="white"
         padding="50"
-        borderWidth={2}
+        borderWidth={1}
+        marginTop={50}
+        marginBottom={50}
       >
-        <Text textAlign="center" fontSize="lg">
+        <Text textAlign="center" fontSize="2xl">
           {nowH}h {nowM}m
         </Text>
       </Container>

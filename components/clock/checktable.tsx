@@ -8,13 +8,13 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { getTodayTasks } from "../../scripts/clock";
+import { getIncompleteAndTodayTasks } from "../../scripts/clock";
 
 export function IndexClockTable() {
   const [taskItems, setTaskItems] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getTodayTasks();
+      const data = await getIncompleteAndTodayTasks();
       setTaskItems(data);
     };
     fetchData();
