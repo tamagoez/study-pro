@@ -11,7 +11,7 @@ export async function getIncompleteAndTodayTasks() {
     .from("cl_tasks")
     .select("id, status, name, date, taketime")
     .eq("userid", userid)
-    .lte("date", today);
+    .eq("status", false);
   if (error) {
     console.error(error);
     toastError(error.message);

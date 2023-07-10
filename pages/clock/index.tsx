@@ -9,7 +9,7 @@ import { zeroPad } from "../../utils/number";
 export default function ClockIndex() {
   const [nowH, setNowH] = useState("00");
   const [nowM, setNowM] = useState("00");
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState([]);
   useEffect(() => {
     const fetchClock = async () => {
       const data = await getNowClock();
@@ -34,7 +34,7 @@ export default function ClockIndex() {
         marginTop={50}
         marginBottom={50}
       >
-        <Text textAlign="center" fontSize="2xl">
+        <Text textAlign="center" fontSize="4xl" fontWeight="bold">
           {nowH}h {nowM}m
         </Text>
       </Container>
