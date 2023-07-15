@@ -1,10 +1,11 @@
-import { Container, Box, Text } from "@chakra-ui/react";
+import { Container, Box, Text, Button, IconButton } from "@chakra-ui/react";
 import Layout from "../../components/Layout";
 import { IndexClockTable } from "../../components/clock/checktable";
 import { useEffect, useState } from "react";
 import { getNowClock } from "../../scripts/clock";
 import { calcMinutesToDHM } from "../../utils/datetime";
 import { zeroPad } from "../../utils/number";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 export default function ClockIndex() {
   const [nowH, setNowH] = useState("00");
@@ -31,13 +32,31 @@ export default function ClockIndex() {
         borderColor="white"
         padding="50"
         borderWidth={1}
-        marginTop={50}
-        marginBottom={50}
+        marginTop={0}
+        marginBottom={0}
+        backgroundColor="gray.50"
       >
-        <Text textAlign="center" fontSize="4xl" fontWeight="bold">
-          {nowH}h {nowM}m
-        </Text>
+        <div style={{ width: 100, height: 100 }}>
+          <CircularProgressbar
+            value={25}
+            text={Number(nowH) + Number(nowM) / 60 + "h"}
+          />
+        </div>
+        <div style={{ width: 100, height: 100 }}>
+          <CircularProgressbar
+            value={50}
+            text={Number(nowH) + Number(nowM) / 60 + "h"}
+          />
+        </div>
+        <div style={{ width: 100, height: 100 }}>
+          <CircularProgressbar
+            value={75}
+            text={Number(nowH) + Number(nowM) / 60 + "h"}
+          />
+        </div>
       </Container>
+      <IconButton aria-label="タスクを追加する" />
+      <IconButton aria-label="タスクテーブルを編集する" />
       <IndexClockTable />
     </Layout>
   );

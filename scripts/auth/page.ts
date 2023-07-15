@@ -55,3 +55,12 @@ export async function signOut() {
   }
   return true;
 }
+
+export async function signInWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${location.hostname}/callback`,
+    },
+  });
+}

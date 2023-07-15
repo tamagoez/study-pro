@@ -12,6 +12,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { toastError, toastSuccess } from "../components/toast/toast";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Auth() {
   // 関数関係の初期設定
@@ -63,6 +64,7 @@ export default function Auth() {
         showfooter={false}
       >
         <Container centerContent width="0.7">
+          <Button leftIcon={<FcGoogle />}>Google</Button>
           <FormControl>
             <FormLabel>Email address</FormLabel>
             <Input
