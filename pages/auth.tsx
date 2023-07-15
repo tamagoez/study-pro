@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { MdEmail, MdPassword } from "react-icons/md";
-import { emailAuth } from "../scripts/auth/page";
+import { emailAuth, signInWithGoogle } from "../scripts/auth/page";
 import { useRouter } from "next/router";
 import {
   Button,
@@ -54,6 +54,10 @@ export default function Auth() {
     }
   }
 
+  async function googleOAuth() {
+    await signInWithGoogle();
+  }
+
   // login/signupは同一ページ内の移動のため、shallow routingで移動することで、ネットワークにアクセスしないでURLを変える
   return (
     <>
@@ -64,7 +68,9 @@ export default function Auth() {
         showfooter={false}
       >
         <Container centerContent width="0.7">
-          <Button leftIcon={<FcGoogle />}>Google</Button>
+          <Button leftIcon={<FcGoogle />} onClick={() => googleOAuth()}>
+            Google
+          </Button>
           <FormControl>
             <FormLabel>Email address</FormLabel>
             <Input
