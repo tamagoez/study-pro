@@ -18,7 +18,7 @@ export default function Callback() {
   };
 
   useEffect(() => {
-    if (typeof query.moveTo === "string") {
+    if (typeof query.moveTo === "string" && query.moveTo !== "null") {
       setMoveTo(query.moveTo);
     }
     console.log(moveTo);

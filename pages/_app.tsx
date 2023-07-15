@@ -69,28 +69,28 @@ function MyApp({
   //   };
   // }, [router]);
 
-  useEffect(() => {
-    const handleNotificationResponse = async () => {
-      if ("Notification" in window && "serviceWorker" in navigator) {
-        const permission = await Notification.requestPermission();
+  // useEffect(() => {
+  //   const handleNotificationResponse = async () => {
+  //     if ("Notification" in window && "serviceWorker" in navigator) {
+  //       const permission = await Notification.requestPermission();
 
-        if (permission === "granted") {
-          const registration = await navigator.serviceWorker.ready;
-          const subscription = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey:
-              "BCXhVNGYilUH9PLT_h5wocF1KqZlZt2pb2sNtlF65156zs1_zsoIbtOMKLVUJPR7PzfDLDWUSCyjs8J4LwOIxP4",
-          });
+  //       if (permission === "granted") {
+  //         const registration = await navigator.serviceWorker.ready;
+  //         const subscription = await registration.pushManager.subscribe({
+  //           userVisibleOnly: true,
+  //           applicationServerKey:
+  //             "BCXhVNGYilUH9PLT_h5wocF1KqZlZt2pb2sNtlF65156zs1_zsoIbtOMKLVUJPR7PzfDLDWUSCyjs8J4LwOIxP4",
+  //         });
 
-          // toastSuccess("通知登録に成功しました!");
-        } else if (permission === "denied") {
-          toastError("通知登録に失敗しました");
-        }
-      }
-    };
+  //         // toastSuccess("通知登録に成功しました!");
+  //       } else if (permission === "denied") {
+  //         toastError("通知登録に失敗しました");
+  //       }
+  //     }
+  //   };
 
-    handleNotificationResponse();
-  }, []);
+  //   handleNotificationResponse();
+  // }, []);
 
   return (
     <SessionContextProvider

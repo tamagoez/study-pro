@@ -1,6 +1,6 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import Layout from "../components/Layout";
-import { Divider, Text } from "@chakra-ui/react";
+import { Button, Divider, Text } from "@chakra-ui/react";
 
 const APP_TITLE = "StudySharp";
 
@@ -10,6 +10,9 @@ const IndexPage = () => (
     <Text size={"md"} style={{ margin: 0 }}>
       勉強に燃えよう
     </Text>
+    <Button as={NextLink} href="/login">
+      ログイン
+    </Button>
     <Divider />
     <div>
       <Text size={"md"}>どのようなことができるようになる予定か</Text>

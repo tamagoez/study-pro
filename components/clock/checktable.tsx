@@ -37,7 +37,7 @@ export function IndexClockTable() {
                 key={x.id}
                 checked={x.checked}
                 name={x.name}
-                time={x.time}
+                taketime={x.taketime}
                 date={x.date}
               />
             ))}
@@ -51,22 +51,26 @@ export function IndexClockTable() {
 function ClockTaskContainer({
   checked,
   name,
-  time,
+  taketime,
   date,
 }: {
   checked: boolean;
   name: string;
-  time: string;
+  taketime: string;
   date: number;
 }) {
+  const datestring = date.toString();
   return (
     <Tr>
       <td>
         <Checkbox checked={checked} />
       </td>
       <td>{name}</td>
-      <td>{time}</td>
-      <td>{date}</td>
+      <td>{taketime}分</td>
+      <td>
+        {datestring.substring(0, 4)}/{datestring.substring(4, 6)}/
+        {datestring.substring(6, 8)}
+      </td>
     </Tr>
   );
 }
