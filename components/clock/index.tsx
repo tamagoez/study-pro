@@ -30,9 +30,11 @@ export function AddModal({}: {}) {
   };
   const handleAdd = async () => {
     const returndata = await addClockTask(name, taketime, date);
-    if (Object.keys(returndata).length === 0) { {
-      initState();
-      onClose();
+    if (Object.keys(returndata).length === 0) {
+      {
+        initState();
+        onClose();
+      }
     }
   };
   return (
