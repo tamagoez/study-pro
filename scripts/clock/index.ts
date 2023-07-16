@@ -86,3 +86,21 @@ export async function addClockTask(
     toastSuccess("タスクが追加できました!<br />頑張ってください!");
   }
 }
+
+export async function changeCLockTaskStatus(
+  id: number | string,
+  status: boolean
+) {
+  const { error } = await supabase
+    .from("cl_tasks")
+    .update({ status })
+    .eq("id", id);
+  if (error) {
+    console.error(error);
+    toastError("タスクの変更中にエラーが発生しました");
+    return false;
+  } else {
+    toastSuccess(status ? "お疲れ様です!" : "頑張りましょう!");
+    return true;
+  }
+}

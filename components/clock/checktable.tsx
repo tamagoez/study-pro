@@ -8,7 +8,10 @@ import {
   Checkbox,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { getIncompleteAndTodayTasks } from "../../scripts/clock";
+import {
+  changeCLockTaskStatus,
+  getIncompleteAndTodayTasks,
+} from "../../scripts/clock";
 
 export function IndexClockTable() {
   const [taskItems, setTaskItems] = useState([]);
@@ -19,6 +22,16 @@ export function IndexClockTable() {
     };
     fetchData();
   }, []);
+
+  const handleChange = (id, key, data) => {
+    const updatedData = taskItems.map((item) => {
+      if (item.id === id) {
+        return { ...item, [key]: data };
+      }
+      return item;
+    });
+    setTaskItems(updatedData);
+  };
   return (
     <>
       <TableContainer>
@@ -35,7 +48,9 @@ export function IndexClockTable() {
             {taskItems.map((x) => (
               <ClockTaskContainer
                 key={x.id}
-                checked={x.checked}
+                id={x.id}
+                handleChange={(event, id, key) => handleChange(event, id, key)}
+                status={x.status}
                 name={x.name}
                 taketime={x.taketime}
                 date={x.date}
@@ -49,21 +64,34 @@ export function IndexClockTable() {
 }
 
 function ClockTaskContainer({
-  checked,
+  handleChange,
+  id,
+  status,
   name,
   taketime,
   date,
 }: {
-  checked: boolean;
+  handleChange: any;
+  id: number | string;
+  status: boolean;
   name: string;
   taketime: string;
   date: number;
 }) {
   const datestring = date.toString();
+  async function changeTaskStatus(status: boolean) {
+    const returndata = await changeCLockTaskStatus(id, status);
+    if (returndata) handleChange(id, "status", status);
+  }
   return (
     <Tr>
       <td>
-        <Checkbox checked={checked} />
+        <Checkbox
+          checked={status}
+          onClick={(e) => {
+            changeTaskStatus(e.target.checked);
+          }}
+        />
       </td>
       <td>{name}</td>
       <td>{taketime}分</td>
