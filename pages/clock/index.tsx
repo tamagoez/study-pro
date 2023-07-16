@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Container,
   Box,
@@ -15,9 +13,9 @@ import { getNowClock } from "../../scripts/clock";
 import { calcMinutesToDHM } from "../../utils/datetime";
 import { zeroPad } from "../../utils/number";
 import { AddModal } from "../../components/clock/index";
+import Progress from "../../components/clock/progressbar";
 // import dynamic from "next/dynamic";
 // const Progress = dynamic(() => import("react-circle-progress-bar"));
-import Progress from "react-circle-progress-bar";
 
 export default function ClockIndex() {
   const [nowH, setNowH] = useState("00");
@@ -49,14 +47,7 @@ export default function ClockIndex() {
         backgroundColor="gray.50"
       >
         <div style={{ width: 100, height: 100 }}>
-          <Progress
-            progress={75}
-            gradient={[
-              { stop: 0.0, color: "#00bc9b" },
-              { stop: 1, color: "#5eaefd" },
-            ]}
-            hideBall={true}
-          />
+          <Progress />
         </div>
       </Container>
       <AddModal />
