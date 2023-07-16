@@ -1,11 +1,19 @@
-import { Container, Box, Text, Button, IconButton } from "@chakra-ui/react";
+import {
+  Container,
+  Box,
+  Text,
+  Button,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Layout from "../../components/Layout";
 import { IndexClockTable } from "../../components/clock/checktable";
 import { useEffect, useState } from "react";
 import { getNowClock } from "../../scripts/clock";
 import { calcMinutesToDHM } from "../../utils/datetime";
 import { zeroPad } from "../../utils/number";
-import { CircularProgressbar } from "react-circular-progressbar";
+import { AddModal } from "../../components/clock/index";
+import Progress from "react-circle-progress-bar";
 
 export default function ClockIndex() {
   const [nowH, setNowH] = useState("00");
@@ -37,25 +45,17 @@ export default function ClockIndex() {
         backgroundColor="gray.50"
       >
         <div style={{ width: 100, height: 100 }}>
-          <CircularProgressbar
-            value={25}
-            text={Number(nowH) + Number(nowM) / 60 + "h"}
-          />
-        </div>
-        <div style={{ width: 100, height: 100 }}>
-          <CircularProgressbar
-            value={50}
-            text={Number(nowH) + Number(nowM) / 60 + "h"}
-          />
-        </div>
-        <div style={{ width: 100, height: 100 }}>
-          <CircularProgressbar
+          <Progress
             value={75}
-            text={Number(nowH) + Number(nowM) / 60 + "h"}
+            gradient={[
+              { stop: 0.0, color: "#00bc9b" },
+              { stop: 1, color: "#5eaefd" },
+            ]}
+            hideBall={true}
           />
         </div>
       </Container>
-      <IconButton aria-label="タスクを追加する" />
+      <AddModal />
       <IconButton aria-label="タスクテーブルを編集する" />
       <IndexClockTable />
     </Layout>

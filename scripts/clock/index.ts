@@ -1,6 +1,6 @@
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { getUserid } from "../auth/user";
-import { toastError } from "../../components/toast/toast";
+import { toastError, toastSuccess } from "../../components/toast/toast";
 import { calcTodayNumber } from "../../utils/datetime";
 const supabase = createPagesBrowserClient();
 
@@ -62,4 +62,25 @@ export async function getNowClock() {
     }
   }
   return data;
+}
+
+export async function addClockTask(
+  name: string | undefined,
+  taketime: number | undefined,
+  date: string | undefined
+) {
+  if (name === undefined || taketime === undefined || date === undefined)
+    return {};
+  const { data, error } = await supabase
+    .from("cl_tasks")
+    .insert({ name, taketime, date, status: false })
+    .select()
+    .single();
+  if (error) {
+    console.error(error);
+    toastError("タスクの追加中にエラーが発生しました");
+    return {};
+  } else {
+    toastSuccess("タスクが追加できました!<br />頑張ってください!");
+  }
 }
