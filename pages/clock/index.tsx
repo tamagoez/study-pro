@@ -45,13 +45,11 @@ export default function ClockIndex() {
         marginBottom={0}
         backgroundColor="gray.50"
       >
-        <div style={{ width: 100, height: 100 }}>
-          <Flex>
-            <ProgressCircle percentage={25} />
-            <ProgressCircle percentage={50} />
-            <ProgressCircle percentage={75} />
-          </Flex>
-        </div>
+        <Flex>
+          <ProgressCircle percentage={25} />
+          <ProgressCircle percentage={50} />
+          <ProgressCircle percentage={75} />
+        </Flex>
       </Container>
       <AddModal />
       <IconButton aria-label="タスクテーブルを編集する" />

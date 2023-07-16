@@ -71,10 +71,11 @@ export async function addClockTask(
 ) {
   if (name === undefined || taketime === undefined || date === undefined)
     return {};
+  const userid = await getUserid();
   const parsedDate = calcDateToNumber(date);
   const { data, error } = await supabase
     .from("cl_tasks")
-    .insert({ name, taketime, date: parsedDate, status: false })
+    .insert({ userid, name, taketime, date: parsedDate, status: false })
     .select()
     .single();
   if (error) {
