@@ -5,6 +5,7 @@ import {
   Button,
   IconButton,
   useDisclosure,
+  Flex,
 } from "@chakra-ui/react";
 import Layout from "../../components/Layout";
 import { IndexClockTable } from "../../components/clock/checktable";
@@ -45,7 +46,11 @@ export default function ClockIndex() {
         backgroundColor="gray.50"
       >
         <div style={{ width: 100, height: 100 }}>
-          <ProgressCircle percentage={70} />
+          <Flex>
+            <ProgressCircle percentage={25} />
+            <ProgressCircle percentage={50} />
+            <ProgressCircle percentage={75} />
+          </Flex>
         </div>
       </Container>
       <AddModal />

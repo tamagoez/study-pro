@@ -30,7 +30,7 @@ export function AddModal({}: {}) {
   };
   const handleAdd = async () => {
     const returndata = await addClockTask(name, taketime, date);
-    if (Object.keys(returndata).length === 0) {
+    if (Object.keys(returndata).length !== 0) {
       {
         initState();
         onClose();
@@ -64,7 +64,7 @@ export function AddModal({}: {}) {
               />
             </FormControl>
             <FormControl>
-              <FormLabel>予定時間</FormLabel>
+              <FormLabel>予定時間(分)</FormLabel>
               <Input
                 type="number"
                 variant="flushed"
@@ -75,10 +75,10 @@ export function AddModal({}: {}) {
             <FormControl>
               <FormLabel>予定実行日</FormLabel>
               <Input
-                placeholder="Select Date and Time"
+                placeholder="Select Date"
                 size="md"
                 variant="flushed"
-                type="datetime-local"
+                type="date"
                 onChange={(e) => setDate(e.target.value)}
                 value={date}
               />

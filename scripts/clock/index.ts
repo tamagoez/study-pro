@@ -1,7 +1,7 @@
 import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { getUserid } from "../auth/user";
 import { toastError, toastSuccess } from "../../components/toast/toast";
-import { calcTodayNumber } from "../../utils/datetime";
+import { calcDateToNumber, calcTodayNumber } from "../../utils/datetime";
 const supabase = createPagesBrowserClient();
 
 export async function getIncompleteAndTodayTasks() {
@@ -71,9 +71,10 @@ export async function addClockTask(
 ) {
   if (name === undefined || taketime === undefined || date === undefined)
     return {};
+  const parsedDate = calcDateToNumber(date);
   const { data, error } = await supabase
     .from("cl_tasks")
-    .insert({ name, taketime, date, status: false })
+    .insert({ name, taketime, date: parsedDate, status: false })
     .select()
     .single();
   if (error) {
