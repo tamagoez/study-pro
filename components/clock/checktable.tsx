@@ -88,7 +88,7 @@ function ClockTaskContainer({
       <td>
         <Checkbox
           checked={status}
-          onClick={(e) => {
+          onChange={(e) => {
             changeTaskStatus(e.target.checked);
           }}
         />
