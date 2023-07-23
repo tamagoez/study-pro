@@ -2,6 +2,7 @@ import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { getUserid } from "../auth/user";
 import { toastError, toastSuccess } from "../../components/toast/toast";
 import { calcDateToNumber, calcTodayNumber } from "../../utils/datetime";
+import { randomTaskDone, randomTaskUndone } from "../../utils/wordlist";
 const supabase = createPagesBrowserClient();
 
 export async function getIncompleteAndTodayTasks() {
@@ -36,33 +37,6 @@ export async function getTodayTasks() {
   return data;
 }
 
-export async function getNowClock() {
-  const userid = await getUserid();
-  const { data, error } = await supabase
-    .from("cl_clock")
-    .select("studymin, breakmin")
-    .eq("userid", userid)
-    .single();
-  if (error) {
-    console.error(error);
-    if (error.code === "PGRST116") {
-      const { data: dataInsert, error: errorInsert } = await supabase
-        .from("cl_clock")
-        .insert({ userid })
-        .select()
-        .single();
-      if (errorInsert) {
-        console.error(error);
-        toastError(error.message);
-      }
-      return dataInsert;
-    } else {
-      toastError(error.message);
-      return;
-    }
-  }
-  return data;
-}
 
 export async function addClockTask(
   name: string | undefined,
@@ -100,7 +74,7 @@ export async function changeCLockTaskStatus(
     toastError("タスクの変更中にエラーが発生しました");
     return false;
   } else {
-    toastSuccess(status ? "お疲れ様です!" : "頑張りましょう!");
+    toastSuccess(status ? randomTaskDone() : randomTaskUndone());
     return true;
   }
 }
